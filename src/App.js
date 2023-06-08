@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Login from './components/LogIn'
 import Register from './components/SignUp'
@@ -8,6 +8,7 @@ import Budget from './components/Budget';
 import Expense from './components/Expense';
 import Form from './components/Saving';
 import Sidebar from './components/Sidebar';
+import Saving from './components/Saving';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState()
@@ -23,8 +24,12 @@ function App() {
               <Route path='/' element={<Form />} />
               <Route path='/log' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path='/reg' element={<Register />} />
-              <Route path='/bud' element={<Budget />} />
-              <Route path='/exp' element={<Expense />} />
+              <Route path='/budget' element={<Budget />} />
+              <Route path='/expense' element={<Expense />} />
+              <Route path='/saving' element={<Saving />} />
+              {/* <Route path='/Form' element={<Income/>} /> */}
+
+              {/* <Route path='/productList' element={<ProductList/>}/> */}
             </Routes>
           </div>
         </div>

@@ -15,13 +15,13 @@ function Expense() {
     description: "",
   });
   const handleOnChange = (event) => {
-    // console.log(inputState);
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
   const handleOnSubmit = (event) => {
     event.preventDefault();
   };
   return (
+
     <div className="form">
       <h1 className=" text-orange-500 font-semibold" style={element_style}>Expenses</h1>
       <FormStyled onSubmit={handleOnSubmit}>

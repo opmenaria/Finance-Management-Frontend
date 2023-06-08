@@ -21,6 +21,8 @@ const Login = () => {
             console.log(response.data);
             if (response.status === 200) {
                 console.log('Login successful');
+                const token = response.data.token;
+                document.cookie = `accessToken=${token}; path=/;`;
             } else {
                 console.log('Login failed');
             }

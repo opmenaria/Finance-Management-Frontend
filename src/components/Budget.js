@@ -79,7 +79,7 @@ function Budget() {
 
   return (
     <div className="form">
-      <h1 style={elementStyle}>Incomes</h1>
+      <h1 style={elementStyle}>Budget</h1>
       {showAlert && (
         <AlertStyled>
           Please fill in all the fields before submitting!!

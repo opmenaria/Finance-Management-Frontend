@@ -8,6 +8,9 @@ import Budget from './components/Budget';
 import Expense from './components/Expense';
 import Form from './components/Saving';
 import Sidebar from './components/Sidebar';
+import Saving from './components/Saving';
+// import Income from './components/Form';
+// import ProductList from './components/Expense'
 
 function App() {
 
@@ -20,11 +23,15 @@ function App() {
           <Sidebar />
           <div className=' w-4/5 mt-10'>
             <Routes>
-              <Route path='/' element={<Form />} />
+              <Route path='/Saving' element={<Form />} />
               <Route path='/log' element={<Login />} />
               <Route path='/reg' element={<Register />} />
-              <Route path='/bud' element={<Budget />} />
-              <Route path='/exp' element={<Expense />} />
+              <Route path='/budget' element={<Budget />} />
+              <Route path='/Expense' element={<Expense />} />
+              <Route path='/Saveing' element={<Saving />} />
+              {/* <Route path='/Form' element={<Income/>} /> */}
+              
+              {/* <Route path='/productList' element={<ProductList/>}/> */}
             </Routes>
           </div>
         </div>

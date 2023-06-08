@@ -13,11 +13,11 @@ export default function Navbar() {
                 <Link to='/'>
                     <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>Home</div>
                 </Link>
-                <Link to='/bud'>
-                    <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>Budget</div>
+                <Link to='/About'>
+                    <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>About</div>
                 </Link>
-                <Link to='/exp'>
-                    <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>Expense</div>
+                <Link to='/Contect'>
+                    <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>Contect Us</div>
                 </Link>
             </div>
             <div className='flex space-x-2 mx-3 text-blue-400'>

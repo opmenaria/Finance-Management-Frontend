@@ -18,11 +18,11 @@ const Register = () => {
         try {
             const response = await axios.post('http://localhost:5000/auth/register', userData);
             if (response.status === 200) {
-                console.log('Registration successful');
+                console.log('Login successful');
                 navigate('/log')
 
             } else {
-                console.log('Registration failed');
+                console.log('Login failed');
             }
         } catch (err) {
             console.error('Error:', err);

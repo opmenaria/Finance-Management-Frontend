@@ -4,23 +4,23 @@ import {
     FaMoneyBillWave,
     FaShoppingBag
 } from "react-icons/fa";
-import {GiExpense,GiRapidshareArrow} from "react-icons/gi"
-import {MdSavings,MdDashboardCustomize} from "react-icons/md"
+import { GiExpense, GiRapidshareArrow } from "react-icons/gi"
+import { MdSavings, MdDashboardCustomize } from "react-icons/md"
 import { NavLink } from 'react-router-dom';
 
 
 const Sidebar = ({ children }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
     const menuItem = [
         {
             path: "/Dashboard",
-            name: "Dashboard",
+            name: "Dashboard ?",
             icon: <MdDashboardCustomize />
         },
         {
             path: "/Form",
-            name: "Incomes",
+            name: "Incomes ?",
             icon: <FaMoneyBillWave />
         },
         {
@@ -30,8 +30,8 @@ const Sidebar = ({ children }) => {
         },
         {
             path: "/Invest",
-            name: "InvestMent",
-            icon: <GiRapidshareArrow/>
+            name: "InvestMent ?",
+            icon: <GiRapidshareArrow />
         },
         {
             path: "/Budget",
@@ -41,8 +41,8 @@ const Sidebar = ({ children }) => {
         {
             path: "/Saving",
             name: "Saving",
-            icon: <MdSavings/>
-            
+            icon: <MdSavings />
+
         }
     ]
     return (
@@ -55,7 +55,7 @@ const Sidebar = ({ children }) => {
                 </div>
                 {
                     menuItem.map((item, index) => (
-                        <NavLink to={item.path} key={index} className="link text-md flex items-center space-x-3 my-2" activeclassName="active">
+                        <NavLink to={item.path} key={index} className="link text-md flex items-center space-x-3 my-2" activeclassname="active">
                             <div className="icon text-cyan-500 ">{item.icon}</div>
                             <div style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</div>
                         </NavLink>

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../imgs/financelogo.png'
 export default function Navbar({ loggedIn, setLoggedIn }) {
-    loggedIn && console.log(loggedIn);
     const handleLogout = () => {
         document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         setLoggedIn(null)
@@ -28,7 +27,7 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
             {loggedIn ?
                 <div className=' mr-4  flex flex-col space-y-1'>
                     <h2 className=' text-white text-sm'>{loggedIn.data.email}</h2>
-                    <Link className=' bg-blue-500 mr-4 border mx-auto px-2 rounded-md' to='/reg'>
+                    <Link className=' bg-blue-500 hover:bg-blue-600 mr-4 border mx-auto px-2 rounded-md' to='/reg'>
                         <button onClick={handleLogout} className=' text-white'>Logout</button>
                     </Link></div>
                 : <div className='flex space-x-2 mx-3 text-blue-400'>
@@ -44,4 +43,3 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
         </div>
     )
 }
-// document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

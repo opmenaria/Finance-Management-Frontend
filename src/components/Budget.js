@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
@@ -21,7 +19,6 @@ const elementStyle = {
 
 function Budget() {
   const navigate = useNavigate();
-  // const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
     name: "",
     amount: "",

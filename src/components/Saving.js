@@ -36,29 +36,29 @@ function Form() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    // if (validateForm()) {
-    await axios.post("http://localhost:5000/savings", inputState)
-      .then((response) => {
-        console.log(inputState);
-        console.log("Form Submitted:", response);
+    if (validateForm()) {
+      await axios.post("http://localhost:5000/savings", inputState)
+        .then((response) => {
+          console.log(inputState);
+          console.log("Form Submitted:", response);
 
-        setInputState({
-          user_Id: "",
-          type: "",
-          amount: "",
-          description: "",
-          createdAt: "",
+          setInputState({
+            user_Id: "",
+            type: "",
+            amount: "",
+            description: "",
+            createdAt: "",
 
+          });
+          navigate('/Saving_table');
+
+        })
+        .catch((error) => {
+          console.error("Error submitting form:", error);
         });
-        navigate('/Saving_table');
-
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-      });
-    // } else {
-    //   setShowAlert(true);
-    // }
+    } else {
+      setShowAlert(true);
+    }
   };
 
   const validateForm = () => {

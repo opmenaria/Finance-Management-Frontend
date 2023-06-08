@@ -1,14 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import axios from 'axios'
+// import { useNavigate } from 'react-router-dom';
+
 const element_style = {
   fontSize: "2.5rem",
   textAlign: "center",
 };
 function Expense() {
+  // const navigate = useNavigate()
   const [inputState, setInputState] = useState({
     title: "",
-    amount: "",
+    amount: '',
     type: "",
     date: "",
     category: "",
@@ -17,8 +21,25 @@ function Expense() {
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(inputState);
+      const response = await axios.post('http://localhost:5000/transactions/add-expense', inputState);
+      if (response.status === 200) {
+        console.log('Expense added successfully');
+        console.log(response.data);
+        // navigate('/')
+
+      } else {
+        console.log('Expense addition failed');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+
+    setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
   };
   return (
 
@@ -28,17 +49,22 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="title">Title</label>
           <input
+            value={inputState.title}
             type="text"
             className="form-control w-96"
+            name="title"
             id="title"
             placeholder="Title"
+            onChange={handleOnChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="amount">Amount</label>
           <input
+            value={inputState.amount}
             type="number"
             className="form-control w-96"
+            name="amount"
             id="amount"
             placeholder="Amount"
             onChange={handleOnChange}
@@ -47,18 +73,22 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="amount">Type</label>
           <input
+            value={inputState.type}
             type="text"
             className="form-control w-96"
-            id="amount"
-            placeholder="Amount"
+            name="type"
+            id="type"
+            placeholder="Type"
             onChange={handleOnChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="date">Date</label>
           <input
+            value={inputState.date}
             type="date"
             className="form-control w-96"
+            name="date"
             id="date"
             placeholder="Date"
             onChange={handleOnChange}
@@ -67,7 +97,9 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="category">Category</label>
           <select
+            value={inputState.category}
             className="form-control w-96"
+            name="category"
             id="category"
             onChange={handleOnChange}
           >
@@ -83,8 +115,10 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
+            value={inputState.description}
             className="form-control w-96"
-            id="textarea"
+            name="description"
+            id="description"
             rows="3"
             onChange={handleOnChange}
           ></textarea>

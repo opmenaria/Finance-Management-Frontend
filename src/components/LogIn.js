@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setLoggedIn }) => {
+    const navigate = useNavigate()
     const [loginData, setLoginData] = useState({ "email": '', "password": "" })
 
     const handleUserData = (e) => {
@@ -14,13 +16,12 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(loginData);
         try {
             const response = await axios.post('http://localhost:5000/auth/login', loginData);
-            response && console.log(response);
-            console.log(response.data);
             if (response.status === 200) {
                 console.log('Login successful');
+                response && setLoggedIn(response.data)
+                navigate('/')
                 const token = response.data.token;
                 document.cookie = `accessToken=${token}; path=/;`;
             } else {
@@ -34,7 +35,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex flex-col justify-center items-center h-screen">
             <div className="w-96 bg-white rounded shadow p-8">
                 <h2 className="text-2xl font-bold mb-4 flex justify-center">Login</h2>
                 <form onSubmit={handleSubmit}>
@@ -61,6 +62,10 @@ const Login = () => {
                         Login
                     </button>
                 </form>
+            </div>
+            <div className='text-white space-y-4 mt-2  flex flex-col'>
+                <p>New to our App</p>
+                <Link className="w-full bg-blue-500 border py-2 px-4 text-center rounded hover:bg-blue-300" to="/reg">Register</Link>
             </div>
         </div>
     );

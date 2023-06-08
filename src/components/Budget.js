@@ -16,7 +16,6 @@ const AlertStyled = styled.div`
 
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "powderblue",
   textAlign: "center",
 };
 
@@ -79,7 +78,7 @@ function Budget() {
 
   return (
     <div className="form">
-      <h1 style={elementStyle}>Incomes</h1>
+      <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Incomes</h1>
       {showAlert && (
         <AlertStyled>
           Please fill in all the fields before submitting!!
@@ -90,7 +89,7 @@ function Budget() {
           <label htmlFor="budget">Budget Name</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control w-96"
             id="budget"
             onChange={handleOnChange}
           />
@@ -99,7 +98,7 @@ function Budget() {
           <label htmlFor="amount">Amount</label>
           <input
             type="number"
-            className="form-control"
+            className="form-control w-96"
             id="amount"
             onChange={handleOnChange}
           />
@@ -108,7 +107,7 @@ function Budget() {
           <label htmlFor="date1">Start Date</label>
           <input
             type="date"
-            className="form-control"
+            className="form-control w-96"
             id="date1"
             onChange={handleOnChange}
           />
@@ -117,13 +116,12 @@ function Budget() {
           <label htmlFor="date2">End Date</label>
           <input
             type="date"
-            className="form-control"
+            className="form-control w-96"
             id="date2"
             onChange={handleOnChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Add Budget
+        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
       </FormStyled>
     </div>

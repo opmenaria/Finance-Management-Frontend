@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Login from './components/LogIn'
 import Register from './components/SignUp'
@@ -10,18 +10,18 @@ import Form from './components/Saving';
 import Sidebar from './components/Sidebar';
 
 function App() {
-
+  const [loggedIn, setLoggedIn] = useState()
 
   return (
     <>
       <div className="app">
-        <Navbar />
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <div className='flex'>
           <Sidebar />
-          <div className=' w-4/5 mt-10'>
+          <div className='mx-auto  mt-20'>
             <Routes>
               <Route path='/' element={<Form />} />
-              <Route path='/log' element={<Login />} />
+              <Route path='/log' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path='/reg' element={<Register />} />
               <Route path='/bud' element={<Budget />} />
               <Route path='/exp' element={<Expense />} />

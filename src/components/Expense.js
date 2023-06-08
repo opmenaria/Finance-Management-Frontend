@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useState } from "react";
 const element_style = {
   fontSize: "2.5rem",
-  color: "powderblue",
   textAlign: "center",
 };
 function Expense() {
@@ -16,7 +15,7 @@ function Expense() {
     description: "",
   });
   const handleOnChange = (event) => {
-    console.log(inputState);
+    // console.log(inputState);
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
   const handleOnSubmit = (event) => {
@@ -24,13 +23,13 @@ function Expense() {
   };
   return (
     <div className="form">
-      <h1 style={element_style}>Add New Expenses</h1>
+      <h1 className=" text-orange-500 font-semibold" style={element_style}>Expenses</h1>
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control w-96"
             id="title"
             placeholder="Title"
           />
@@ -39,7 +38,7 @@ function Expense() {
           <label htmlFor="amount">Amount</label>
           <input
             type="number"
-            className="form-control"
+            className="form-control w-96"
             id="amount"
             placeholder="Amount"
             onChange={handleOnChange}
@@ -49,7 +48,7 @@ function Expense() {
           <label htmlFor="amount">Type</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control w-96"
             id="amount"
             placeholder="Amount"
             onChange={handleOnChange}
@@ -59,7 +58,7 @@ function Expense() {
           <label htmlFor="date">Date</label>
           <input
             type="date"
-            className="form-control"
+            className="form-control w-96"
             id="date"
             placeholder="Date"
             onChange={handleOnChange}
@@ -68,7 +67,7 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="category">Category</label>
           <select
-            className="form-control"
+            className="form-control w-96"
             id="category"
             onChange={handleOnChange}
           >
@@ -84,14 +83,13 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
-            className="form-control"
+            className="form-control w-96"
             id="textarea"
             rows="3"
             onChange={handleOnChange}
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
+        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
 
         {/* <Button

@@ -2,40 +2,65 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
+import axios from 'axios'
+// import { useNavigate } from 'react-router-dom';
+
+
+
 function Expense() {
+  // const navigate = useNavigate()
+  const [tableData, setTableData] = useState([])
   const [inputState, setInputState] = useState({
     title: "",
-    amount: "",
+    amount: '',
     type: "",
     date: "",
     category: "",
     description: "",
   });
   const handleOnChange = (event) => {
-    console.log(inputState);
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    axios
+      .post("", { inputState })
+      .then((response) => {
+        setTableData((prev) => [...prev, inputState]);
+
+        console.log("Form Submitted:", inputState);
+
+        //setUsers((prev)=>[...prev,inputState]);
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+      });
   };
   return (
+
     <div className="form">
-      <h1 style={element_style}>Add New Expenses</h1>
+      <h1 className=" text-orange-500 font-semibold" style={element_style}>Expenses</h1>
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>
           <input
+            value={inputState.title}
             type="text"
-            className="form-control"
+            className="form-control w-96"
+            name="title"
             id="title"
             placeholder="Title"
+            onChange={handleOnChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="amount">Amount</label>
           <input
+            value={inputState.amount}
             type="number"
-            className="form-control"
+            className="form-control w-96"
+            name="amount"
             id="amount"
             placeholder="Amount"
             onChange={handleOnChange}
@@ -44,18 +69,22 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="amount">Type</label>
           <input
+            value={inputState.type}
             type="text"
-            className="form-control"
-            id="amount"
-            placeholder="Amount"
+            className="form-control w-96"
+            name="type"
+            id="type"
+            placeholder="Type"
             onChange={handleOnChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="date">Date</label>
           <input
+            value={inputState.date}
             type="date"
-            className="form-control"
+            className="form-control w-96"
+            name="date"
             id="date"
             placeholder="Date"
             onChange={handleOnChange}
@@ -64,7 +93,9 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="category">Category</label>
           <select
-            className="form-control"
+            value={inputState.category}
+            className="form-control w-96"
+            name="category"
             id="category"
             onChange={handleOnChange}
           >
@@ -81,14 +112,15 @@ function Expense() {
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
-            className="form-control"
-            id="textarea"
+            value={inputState.description}
+            className="form-control w-96"
+            name="description"
+            id="description"
             rows="3"
             onChange={handleOnChange}
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
+        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
 
         {/* <Button
@@ -113,11 +145,12 @@ function Expense() {
         </thead>
 
         <tbody>
-          {/* {tableData.map((user, index) => (
+          {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
               <td>{user.title}</td>
               <td>{user.amount}</td>
+               <td>{user.type}</td>
               <td>{user.date}</td>
               <td>{user.category}</td>
               <td>{user.description}</td>
@@ -125,7 +158,7 @@ function Expense() {
                 <button className="btn btn-warning">Edit</button>
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
     </div>

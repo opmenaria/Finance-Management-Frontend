@@ -3,13 +3,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 
 function Budget() {
-  const navigate = useNavigate();
-  // const [tableData, setTableData] = useState([]);
+
+const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
     name: "",
     amount: "",
@@ -27,9 +27,9 @@ function Budget() {
 
     if (validateForm()) {
       axios
-        .post("http://localhost:5000/transactions/add-expense", inputState)
+        .post("", inputState)
         .then((response) => {
-          //setTableData((prev) => [...prev, inputState]);
+        setTableData((prev) => [...prev, inputState]);
 
           console.log("Form Submitted:", inputState);
 
@@ -39,7 +39,7 @@ function Budget() {
             date1: "",
             date2: "",
           });
-          navigate("/Budget_table");
+        
           // setUsers((prev)=>[...prev,inputState]);
         })
         .catch((error) => {
@@ -127,19 +127,19 @@ function Budget() {
         </thead>
 
         <tbody>
-          {/* {tableData.map((user, index) => (
+          {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
-              <td>{user.title}</td>
+              <td>{user.name}</td>
               <td>{user.amount}</td>
-              <td>{user.date}</td>
-              <td>{user.category}</td>
-              <td>{user.description}</td>
+              <td>{user.date1}</td>
+              <td>{user.date2}</td>
+         
               <td>
                 <button className="btn btn-warning">Edit</button>
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
     </div>
@@ -202,7 +202,7 @@ const AlertStyled = styled.div`
 
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "#002D62",
+  color: "powderblue",
   textAlign: "center",
 };
 export default Budget;

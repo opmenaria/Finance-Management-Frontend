@@ -1,100 +1,54 @@
 import React from "react";
-import styled from "styled-components";
 import { useState } from "react";
+//import {useNavigate} from "react-router-dom"
 
+import styled from "styled-components";
 import axios from "axios";
-function Saving(){
+import { FaPlus } from "react-icons/fa";
 
- const [tableData, setTableData] = useState([]);
+function Investment() {
+  const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
-    userId: "",
-    type: "",
+    name: "",
     amount: "",
-    description: "",
-    createdAt:"",
+    type: "",
+    userId: "",
+    startDate: "",
+    enddate:"",
+    description:"",
   });
-
-  const [showAlert, setShowAlert] = useState(false);
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
+    axios
+      .post("", { inputState })
+      .then((response) => {
+        setTableData((prev) => [...prev, inputState]);
 
-    if (validateForm()) {
-      axios
-        .post("", inputState)
-        .then((response) => {
-          setTableData((prev) => [...prev, inputState]);
-         
-          console.log("Form Submitted:", inputState);
+        console.log("Form Submitted:", inputState);
 
-          setInputState({
-            user_Id: "",
-            type: "",
-            amount: "",
-            description: "",
-            createdAt:"",
-           
-          });
-          
-         // setUsers((prev)=>[...prev,inputState]);
-         
-        })
-        .catch((error) => {
-          console.error("Error submitting form:", error);
-        });
-    } else {
-      setShowAlert(true);
-    }
+        //setUsers((prev)=>[...prev,inputState]);
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+      });
   };
-
-  const validateForm = () => {
-    const { userId, type, amount, description, createdAt } = inputState;
-
-    if (
-      userId.trim() === "" ||
-      type.trim() === "" ||
-      amount.trim() === "" ||
-      description.trim() === "" ||
-      createdAt.trim() === ""
-    ) {
-      return false;
-    }
-    return true;
-  };
-
   return (
-    <div className="form">
-      <h1 style={elementStyle}>Savings</h1>
-      {showAlert && (
-        <AlertStyled>
-          Please fill in all the fields before submitting!!
-        </AlertStyled>
-      )}
+    <div classname="form">
+      <h1 style={elementStyle}>Investment</h1>
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
-          <label htmlFor="id">User Id</label>
-          <input
-            type="number"
-            className="form-control"
-            id="id"
-            name="userId"
-            placeholder="User Id"
-            value={inputState.userId}
-            onChange={handleOnChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="type">Type</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             className="form-control"
-            id="type"
-            name="type"
-            placeholder="Type"
-            value={inputState.type}
+            id="name"
+            name="name"
+            placeholder="Name"
+            value={inputState.name}
             onChange={handleOnChange}
           />
         </div>
@@ -110,7 +64,54 @@ function Saving(){
             onChange={handleOnChange}
           />
         </div>
-    
+        <div className="form-group">
+          <label htmlFor="type">Type</label>
+          <input
+            type="type"
+            className="form-control"
+            id="type"
+            name="type"
+            placeholder="Type"
+            value={inputState.type}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="userId">User Id</label>
+          <input
+            type="userId"
+            className="form-control"
+            id="userId"
+            name="userId"
+            placeholder="User Id"
+            value={inputState.userId}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="startdate">Start Date</label>
+          <input
+            type="startdate"
+            className="form-control"
+            id="startdate"
+            name="startdate"
+            placeholder="Start Date"
+            value={inputState.startdate}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="enddate">End Date</label>
+          <input
+            type="enddate"
+            className="form-control"
+            id="enddate"
+            name="enddate"
+            placeholder="End Date"
+            value={inputState.enddate}
+            onChange={handleOnChange}
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
@@ -119,21 +120,9 @@ function Saving(){
             rows="3"
             onChange={handleOnChange}
           ></textarea>
-           <div className="form-group">
-          <label htmlFor="date">Created At</label>
-          <input
-            type="date"
-            className="form-control"
-            id="date"
-            name="createdAt"
-            placeholder="Date"
-            value={inputState.createdAt}
-            onChange={handleOnChange}
-          />
-        </div>
         </div>
         <button type="submit" className="btn btn-primary">
-          Submit
+          Add Income <FaPlus />
         </button>
 
         {/* <Button
@@ -144,36 +133,39 @@ function Saving(){
       color={'#fff'}/> */}
       </FormStyled>
       <table className="table">
-        <thead>
+        <thead className="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">User Id</th>
-            <th scope="col">Type</th>
+            <th scope="col">Name</th>
             <th scope="col">Amount</th>
+            <th scope="col">type</th>
+            <th scope="col">User Id</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+           
             <th scope="col">Description</th>
-            <th scope="col">Created</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
 
         <tbody>
-          {tableData.map((user, index) => (
+           {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
-              <td>{user.userId}</td>
-              <td>{user.type}</td>
+              <td>{user.name}</td>
               <td>{user.amount}</td>
+              <td>{user.type}</td>
+              <td>{user.userId}</td>
+              <td>{user.startdate}</td>
+              <td>{user.enddate}</td>
               <td>{user.description}</td>
-              <td>{user.createdAt}</td>
-              
               <td>
                 <button className="btn btn-warning">Edit</button>
               </td>
             </tr>
-          ))}
+          ))} 
         </tbody>
       </table>
-      
     </div>
   );
 }
@@ -215,25 +207,16 @@ const FormStyled = styled.form`
     border-color: #007bff;
     border-radius: 12px;
     margin-bottom: 4px;
-    width: 20vh;
+    width: 25vh;
     &:hover {
       background-color: #0069d9;
       border-color: #0062cc;
     }
   }
 `;
-const AlertStyled = styled.div`
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-`;
-
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "powderblue",
+  color: "#002D62",
   textAlign: "center",
 };
-export default Saving;
+export default Investment;

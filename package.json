@@ -41,5 +41,9 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.3.2"
-  }
+  },
+  "description": "<<<<<<< HEAD\r # Getting Started with Create React App",
+  "main": "tailwind.config.js",
+  "author": "",
+  "license": "ISC"
 }

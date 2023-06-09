@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+
 const Register = () => {
+    const navigate = useNavigate()
     const [userData, setUserData] = useState({ "username": '', "email": '', "password": '', "phone": '' })
 
     const handleUserData = (e) => {
@@ -15,9 +18,11 @@ const Register = () => {
         try {
             const response = await axios.post('http://localhost:5000/auth/register', userData);
             if (response.status === 200) {
-                console.log('Registration successful');
+                console.log('Login successful');
+                navigate('/log')
+
             } else {
-                console.log('Registration failed');
+                console.log('Login failed');
             }
         } catch (err) {
             console.error('Error:', err);
@@ -28,7 +33,7 @@ const Register = () => {
 
 
     return (
-        <div className="flex justify-center items-center h-screen ">
+        <div className="flex flex-col justify-center items-center h-screen ">
             <div className="w-96 bg-white rounded shadow p-8 ">
                 <h2 className="text-2xl font-bold mb-4 flex justify-center ">Register</h2>
                 <form onSubmit={handleSubmit}>
@@ -67,6 +72,10 @@ const Register = () => {
                         Register
                     </button>
                 </form>
+            </div>
+            <div className='text-white space-y-4 mt-2  flex flex-col'>
+                <p>Already have an account</p>
+                <Link className="w-full bg-blue-500 border py-2 px-4 text-center rounded hover:bg-blue-300" to="/log">Login</Link>
             </div>
         </div>
     );

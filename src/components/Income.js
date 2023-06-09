@@ -9,6 +9,9 @@ const element_style = {
     textAlign: "center",
 };
 function Income() {
+    const [tableData, setTableData] = useState([]);
+
+
     // const navigate = useNavigate()
     const [inputState, setInputState] = useState({
         title: '',
@@ -29,6 +32,7 @@ function Income() {
             console.log(inputState);
             const response = await axios.post('http://localhost:5000/transactions/add-income', inputState);
             if (response.status === 200) {
+                setTableData((prev) => [...prev, inputState]);
                 console.log('Income added successfully');
                 console.log(response.data);
                 // navigate('/')
@@ -127,6 +131,35 @@ function Income() {
                 <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
                 </button>
             </FormStyled>
+            <table className="table">
+                <thead className="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {tableData.map((user, index) => (
+                        <tr key={index.id}>
+                            <td>{index + 1}</td>
+                            <td>{user.title}</td>
+                            <td>{user.amount}</td>
+                            <td>{user.date}</td>
+                            <td>{user.category}</td>
+                            <td>{user.description}</td>
+                            <td>
+                                <button className="btn btn-warning">Edit</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

@@ -1,24 +1,15 @@
+
+
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-const AlertStyled = styled.div`
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-`;
 
-const elementStyle = {
-  fontSize: "2.5rem",
-  textAlign: "center",
-};
+import axios from "axios";
+
 
 function Budget() {
-  const navigate = useNavigate();
+
+  const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
     name: "",
     amount: "",
@@ -36,9 +27,9 @@ function Budget() {
 
     if (validateForm()) {
       axios
-        .post("http://localhost:5000/transactions/add-expense", inputState)
+        .post("", inputState)
         .then((response) => {
-          //setTableData((prev) => [...prev, inputState]);
+          setTableData((prev) => [...prev, inputState]);
 
           console.log("Form Submitted:", inputState);
 
@@ -48,7 +39,7 @@ function Budget() {
             date1: "",
             date2: "",
           });
-          navigate("/Budget_table");
+
           // setUsers((prev)=>[...prev,inputState]);
         })
         .catch((error) => {
@@ -74,7 +65,7 @@ function Budget() {
   };
 
   return (
-    <div className="form">
+    <div className="form h-screen">
       <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Budget</h1>
       {showAlert && (
         <AlertStyled>
@@ -86,7 +77,7 @@ function Budget() {
           <label htmlFor="budget">Budget Name</label>
           <input
             type="text"
-            className="form-control w-96"
+            className="form-control"
             id="budget"
             onChange={handleOnChange}
           />
@@ -95,7 +86,7 @@ function Budget() {
           <label htmlFor="amount">Amount</label>
           <input
             type="number"
-            className="form-control w-96"
+            className="form-control"
             id="amount"
             onChange={handleOnChange}
           />
@@ -104,7 +95,7 @@ function Budget() {
           <label htmlFor="date1">Start Date</label>
           <input
             type="date"
-            className="form-control w-96"
+            className="form-control"
             id="date1"
             onChange={handleOnChange}
           />
@@ -113,14 +104,44 @@ function Budget() {
           <label htmlFor="date2">End Date</label>
           <input
             type="date"
-            className="form-control w-96"
+            className="form-control"
             id="date2"
             onChange={handleOnChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
+        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Add Budget
         </button>
       </FormStyled>
+      <table className="table">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Budget Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {tableData.map((user, index) => (
+            <tr key={index.id}>
+              <td>{index + 1}</td>
+              <td>{user.name}</td>
+              <td>{user.amount}</td>
+              <td>{user.date1}</td>
+              <td>{user.date2}</td>
+
+              <td>
+                <button className="btn btn-warning">Edit</button>
+
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -170,4 +191,17 @@ const FormStyled = styled.form`
     }
   }
 `;
+const AlertStyled = styled.div`
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+`;
+
+const elementStyle = {
+  fontSize: "2.5rem",
+  textAlign: "center",
+};
 export default Budget;

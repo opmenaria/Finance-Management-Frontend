@@ -29,8 +29,8 @@ const Sidebar = ({ children }) => {
             icon: <GiExpense />
         },
         {
-            path: "/Invest",
-            name: "InvestMent ?",
+            path: "/Investment",
+            name: "InvestMent",
             icon: <GiRapidshareArrow />
         },
         {
@@ -43,10 +43,16 @@ const Sidebar = ({ children }) => {
             name: "Saving",
             icon: <MdSavings />
 
+        },
+        {
+            path: "/Tax",
+            name: "Tax",
+            icon: <MdSavings />
+
         }
     ]
     return (
-        <div className="  bg-black h-screen">
+        <div className=" fixed  bg-black h-screen">
             <div className="sidebar  text-white flex flex-col pl-2 pt-16">
                 <div className="flex text-center items-center justify-between my-2">
                     <h1 style={{ display: isOpen ? "block" : "none" }} className="text-lg mr-3 text-orange-400 text-left">Finance Management</h1>

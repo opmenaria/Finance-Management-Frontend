@@ -1,82 +1,53 @@
 import React from "react";
-import styled from "styled-components";
 import { useState } from "react";
+//import {useNavigate} from "react-router-dom"
 
+import styled from "styled-components";
 import axios from "axios";
-function Saving() {
 
+function Investment() {
   const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
-    type: "",
+    name: "",
     amount: "",
+    type: "",
+    userId: "",
+    startDate: "",
+    enddate: "",
     description: "",
-    createdAt: "",
   });
-
-  const [showAlert, setShowAlert] = useState(false);
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
-  const handleOnSubmit = async (event) => {
+  const handleOnSubmit = (event) => {
     event.preventDefault();
+    axios
+      .post("", { inputState })
+      .then((response) => {
+        setTableData((prev) => [...prev, inputState]);
 
-    if (validateForm()) {
-      console.log(inputState);
-      await axios.post("http://localhost:5000/savings", inputState)
-        .then((response) => {
-          console.log("Form Submitted:", response);
+        console.log("Form Submitted:", inputState);
 
-          setInputState({
-            type: "",
-            amount: "",
-            description: "",
-
-          });
-          // navigate('/Saving_table');
-
-        })
-        .catch((error) => {
-          console.error("Error submitting form:", error);
-        });
-    } else {
-      setShowAlert(true);
-    }
+        //setUsers((prev)=>[...prev,inputState]);
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+      });
   };
-
-  const validateForm = () => {
-    const { userId, type, amount, description, createdAt } = inputState;
-
-    if (
-      userId.trim() === "" ||
-      type.trim() === "" ||
-      amount.trim() === "" ||
-      description.trim() === "" ||
-      createdAt.trim() === ""
-    ) {
-      return false;
-    }
-    return true;
-  };
-
   return (
-    <div className="form h-screen">
-      <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Savings</h1>
-      {showAlert && (
-        <AlertStyled>
-          Please fill in all the fields before submitting!!
-        </AlertStyled>
-      )}
+    <div classname="form">
+      <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Investment</h1>
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
-          <label htmlFor="type">Type</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             className="form-control"
-            id="type"
-            name="type"
-            placeholder="Type"
-            value={inputState.type}
+            id="name"
+            name="name"
+            placeholder="Name"
+            value={inputState.name}
             onChange={handleOnChange}
           />
         </div>
@@ -92,28 +63,68 @@ function Saving() {
             onChange={handleOnChange}
           />
         </div>
-
+        <div className="form-group">
+          <label htmlFor="type">Type</label>
+          <input
+            type="type"
+            className="form-control"
+            id="type"
+            name="type"
+            placeholder="Type"
+            value={inputState.type}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="startdate">Start Date</label>
+          <input
+            type="startdate"
+            className="form-control"
+            id="startdate"
+            name="startdate"
+            placeholder="Start Date"
+            value={inputState.startdate}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="enddate">End Date</label>
+          <input
+            type="enddate"
+            className="form-control"
+            id="enddate"
+            name="enddate"
+            placeholder="End Date"
+            value={inputState.enddate}
+            onChange={handleOnChange}
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
+            type="textarea"
             className="form-control"
-            id="description"
-            name="description"
+            id="textarea"
             rows="3"
-            value={inputState.description}
+            name="description"
+            placeholder="Add Description"
             onChange={handleOnChange}
           ></textarea>
-        </div >
-        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Add Saving
+        </div>
+        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Add Investment
         </button>
-      </FormStyled >
+
+      </FormStyled>
       <table className="table">
-        <thead>
+        <thead className="thead-dark">
           <tr>
-            <th scope="col">Type</th>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
             <th scope="col">Amount</th>
+            <th scope="col">type</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
             <th scope="col">Description</th>
-            <th scope="col">Created</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -122,12 +133,12 @@ function Saving() {
           {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
-              <td>{user.userId}</td>
-              <td>{user.type}</td>
+              <td>{user.name}</td>
               <td>{user.amount}</td>
+              <td>{user.type}</td>
+              <td>{user.startdate}</td>
+              <td>{user.enddate}</td>
               <td>{user.description}</td>
-              <td>{user.createdAt}</td>
-
               <td>
                 <button className="btn btn-warning">Edit</button>
               </td>
@@ -135,8 +146,7 @@ function Saving() {
           ))}
         </tbody>
       </table>
-
-    </div >
+    </div>
   );
 }
 const FormStyled = styled.form`
@@ -177,24 +187,15 @@ const FormStyled = styled.form`
     border-color: #007bff;
     border-radius: 12px;
     margin-bottom: 4px;
-    width: 20vh;
+    width: 25vh;
     &:hover {
       background-color: #0069d9;
       border-color: #0062cc;
     }
   }
 `;
-const AlertStyled = styled.div`
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-`;
-
 const elementStyle = {
   fontSize: "2.5rem",
   textAlign: "center",
 };
-export default Saving;
+export default Investment;

@@ -10,7 +10,8 @@ import Form from './components/Saving';
 import Sidebar from './components/Sidebar';
 import Saving from './components/Saving';
 import Income from './components/Income';
-
+import Investment from './components/Investment';
+import Tax from './components/Tax';
 function App() {
   const [loggedIn, setLoggedIn] = useState()
 
@@ -29,6 +30,9 @@ function App() {
               <Route path='/expense' element={<Expense />} />
               <Route path='/saving' element={<Saving />} />
               <Route path='/income' element={<Income />} />
+              <Route path='/Investment' element={<Investment />} />
+              <Route path='/Tax' element={<Tax />} />
+
               {/* <Route path='/Form' element={<Income/>} /> */}
 
               {/* <Route path='/productList' element={<ProductList/>}/> */}
@@ -40,4 +44,5 @@ function App() {
   )
 }
 export default App
+
 

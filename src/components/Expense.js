@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+
 import axios from 'axios'
 // import { useNavigate } from 'react-router-dom';
 
-const element_style = {
-  fontSize: "2.5rem",
-  textAlign: "center",
-};
+
+
 function Expense() {
   // const navigate = useNavigate()
+  const [tableData, setTableData] = useState([])
   const [inputState, setInputState] = useState({
     title: "",
     amount: '',
@@ -25,22 +25,18 @@ function Expense() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    try {
-      console.log(inputState);
-      const response = await axios.post('http://localhost:5000/transactions/add-expense', inputState);
-      if (response.status === 200) {
-        console.log('Expense added successfully');
-        console.log(response.data);
-        // navigate('/')
+    axios
+      .post("", { inputState })
+      .then((response) => {
+        setTableData((prev) => [...prev, inputState]);
 
-      } else {
-        console.log('Expense addition failed');
-      }
-    } catch (err) {
-      console.error('Error:', err);
-    }
+        console.log("Form Submitted:", inputState);
 
-    setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
+        //setUsers((prev)=>[...prev,inputState]);
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+      });
   };
   return (
 
@@ -105,10 +101,11 @@ function Expense() {
             onChange={handleOnChange}
           >
             <option value="disabled">Select options</option>
-            <option value="salary">Salary</option>
-            <option value="freelancing">Freelancing</option>
-            <option value="investment">Investment</option>
-            <option value="bank">Bank</option>
+            <option value="salary">Education</option>
+            <option value="freelancing">Health</option>
+            <option value="investment">Groceries</option>
+            <option value="bank">Clothing</option>
+            <option value="bank">Travelling</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -126,14 +123,38 @@ function Expense() {
         </div>
         <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
-
-        {/* <Button
-      name={'Add Income'}
-      bPad={'.8rem 1.6rem'}
-      brad={'30px'}
-      bg={'var(--color-accent'}
-      color={'#fff'}/> */}
       </FormStyled>
+      <table className="table">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Type</th>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {tableData.map((user, index) => (
+            <tr key={index.id}>
+              <td>{index + 1}</td>
+              <td>{user.title}</td>
+              <td>{user.amount}</td>
+              <td>{user.type}</td>
+              <td>{user.date}</td>
+              <td>{user.category}</td>
+              <td>{user.description}</td>
+              <td>
+                <button className="btn btn-warning">Edit</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -182,5 +203,8 @@ const FormStyled = styled.form`
     }
   }
 `;
-
+const element_style = {
+  fontSize: "2.5rem",
+  textAlign: "center",
+};
 export default Expense;

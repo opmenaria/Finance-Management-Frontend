@@ -20,7 +20,7 @@ const Sidebar = ({ children }) => {
         },
         {
             path: "/income",
-            name: "Incomes",
+            name: "Incomes ",
             icon: <FaMoneyBillWave />
         },
         {
@@ -35,7 +35,7 @@ const Sidebar = ({ children }) => {
         },
         {
             path: "/Budget",
-            name: "Budget ?",
+            name: "Budget",
             icon: <FaShoppingBag />
         },
         {

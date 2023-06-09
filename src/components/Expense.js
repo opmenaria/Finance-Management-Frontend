@@ -25,18 +25,28 @@ function Expense() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("", { inputState })
-      .then((response) => {
-        setTableData((prev) => [...prev, inputState]);
-
-        console.log("Form Submitted:", inputState);
-
-        //setUsers((prev)=>[...prev,inputState]);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
+    try {
+      console.log(inputState);
+      const response = await axios.post('http://localhost:5000/transactions/add-expense', inputState, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        withCredentials: true, // Include credentials in the request
       });
+      if (response.status === 200) {
+        setTableData((prev) => [...prev, inputState]);
+        console.log('Expense added successfully');
+        console.log(response.data);
+        // navigate('/')
+
+      } else {
+        console.log('Expense addition failed');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+
+    setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
   };
   return (
 

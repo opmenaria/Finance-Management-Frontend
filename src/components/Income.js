@@ -10,9 +10,6 @@ const element_style = {
 };
 function Income() {
     const [tableData, setTableData] = useState([]);
-
-
-    // const navigate = useNavigate()
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',

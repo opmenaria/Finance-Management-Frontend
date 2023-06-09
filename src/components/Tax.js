@@ -68,7 +68,7 @@ function Tax() {
 
   return (
     <div className="form h-screen">
-      <h1 style={elementStyle}>Tax</h1>
+      <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Tax</h1>
       {showAlert && (
         <AlertStyled>
           Please fill in all the fields before submitting!!
@@ -221,7 +221,6 @@ const AlertStyled = styled.div`
 
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "powderblue",
   textAlign: "center",
 };
 export default Tax;

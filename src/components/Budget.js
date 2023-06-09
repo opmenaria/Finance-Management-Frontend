@@ -11,10 +11,10 @@ function Budget() {
 
   const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
-    name: "",
+    category: "",
     amount: "",
-    date1: "",
-    date2: "",
+    startDate: "",
+    endDate: "",
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -27,20 +27,18 @@ function Budget() {
 
     if (validateForm()) {
       axios
-        .post("", inputState)
+        .post("http://localhost:5000/budgets", inputState, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+          withCredentials: true, // Include credentials in the request
+        })
         .then((response) => {
-          setTableData((prev) => [...prev, inputState]);
+          setTableData((prev) => [...prev, response.data]);
 
-          console.log("Form Submitted:", inputState);
+          console.log("Form Submitted:", response.data);
 
-          setInputState({
-            name: "",
-            amount: "",
-            date1: "",
-            date2: "",
-          });
-
-          // setUsers((prev)=>[...prev,inputState]);
+          setInputState({ category: "", amount: "", startDate: "", endDate: "" })
         })
         .catch((error) => {
           console.error("Error submitting form:", error);
@@ -48,16 +46,17 @@ function Budget() {
     } else {
       setShowAlert(true);
     }
+
   };
 
   const validateForm = () => {
-    const { name, amount, date1, date2 } = inputState;
+    const { category, amount, startDate, endDate } = inputState;
 
     if (
-      name.trim() === "" ||
+      category.trim() === "" ||
       amount.trim() === "" ||
-      date1.trim() === "" ||
-      date2.trim() === ""
+      startDate.trim() === "" ||
+      endDate.trim() === ""
     ) {
       return false;
     }
@@ -74,38 +73,46 @@ function Budget() {
       )}
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
-          <label htmlFor="budget">Budget Name</label>
+          <label htmlFor="category">Category</label>
           <input
+            value={inputState.category}
             type="text"
             className="form-control"
-            id="budget"
+            id="category"
+            name="category"
             onChange={handleOnChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="amount">Amount</label>
           <input
+            value={inputState.amount}
             type="number"
             className="form-control"
             id="amount"
+            name="amount"
             onChange={handleOnChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="date1">Start Date</label>
+          <label htmlFor="startDate">Start Date</label>
           <input
+            value={inputState.startDate}
             type="date"
             className="form-control"
-            id="date1"
+            id="startDate"
+            name='startDate'
             onChange={handleOnChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="date2">End Date</label>
+          <label htmlFor="endDate">End Date</label>
           <input
+            value={inputState.endDate}
             type="date"
             className="form-control"
-            id="date2"
+            id="endDate"
+            name="endDate"
             onChange={handleOnChange}
           />
         </div>
@@ -116,7 +123,7 @@ function Budget() {
         <thead className="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Budget Name</th>
+            <th scope="col">Category</th>
             <th scope="col">Amount</th>
             <th scope="col">Start Date</th>
             <th scope="col">End Date</th>
@@ -127,12 +134,12 @@ function Budget() {
 
         <tbody>
           {tableData.map((user, index) => (
-            <tr key={index.id}>
+            <tr key={index}>
               <td>{index + 1}</td>
-              <td>{user.name}</td>
+              <td>{user.category}</td>
               <td>{user.amount}</td>
-              <td>{user.date1}</td>
-              <td>{user.date2}</td>
+              <td>{user.startDate}</td>
+              <td>{user.endDate}</td>
 
               <td>
                 <button className="btn btn-warning">Edit</button>

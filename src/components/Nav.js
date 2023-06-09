@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../imgs/financelogo.png'
+
 export default function Navbar({ loggedIn, setLoggedIn }) {
+    const [mail, setMail] = useState()
     const handleLogout = () => {
         document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         setLoggedIn(null)
+        setMail('')
+        localStorage.removeItem("email")
     }
+    useEffect(() => {
+        const email = localStorage.getItem("email")
+        setMail(email)
+    }, [])
+    useEffect(() => {
+        mail && console.log(mail);
+    }, [mail])
     return (
         <div className='z-10 w-full fixed flex items-center justify-between py-2 bg-gray-900 font-semibold text-lg border-b'>
 
@@ -24,9 +35,9 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
                     <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>Contect Us</div>
                 </Link>
             </div>
-            {loggedIn ?
+            {loggedIn || mail ?
                 <div className=' mr-4  flex flex-col space-y-1'>
-                    <h2 className=' text-white text-sm'>{loggedIn.data.email}</h2>
+                    {mail && <h2 className=' text-white text-sm'>{mail}</h2> || loggedIn && <h2 className=' text-white text-sm'>{loggedIn.data.email}</h2>}
                     <Link className=' bg-blue-500 hover:bg-blue-600 mr-4 border mx-auto px-2 rounded-md' to='/reg'>
                         <button onClick={handleLogout} className=' text-white'>Logout</button>
                     </Link></div>

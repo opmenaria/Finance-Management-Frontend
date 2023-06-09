@@ -21,7 +21,7 @@ function App() {
         <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <div className='flex'>
           <Sidebar />
-          <div className='mx-auto  mt-20'>
+          <div className='mx-auto mt-20'>
             <Routes>
               <Route path='/' element={<Form />} />
               <Route path='/log' element={<Login setLoggedIn={setLoggedIn} />} />

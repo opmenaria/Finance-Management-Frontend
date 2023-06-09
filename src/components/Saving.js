@@ -21,43 +21,43 @@ function Saving() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    if (validateForm()) {
-      console.log(inputState);
-      await axios.post("http://localhost:5000/savings", inputState)
-        .then((response) => {
-          console.log("Form Submitted:", response);
+    // if (validateForm()) {
+    console.log(inputState);
+    await axios.post("http://localhost:5000/savings", inputState)
+      .then((response) => {
+        console.log("Form Submitted:", response);
+        setTableData(response.data)
+        setInputState({
+          type: "",
+          amount: "",
+          description: "",
 
-          setInputState({
-            type: "",
-            amount: "",
-            description: "",
-
-          });
-          // navigate('/Saving_table');
-
-        })
-        .catch((error) => {
-          console.error("Error submitting form:", error);
         });
-    } else {
-      setShowAlert(true);
-    }
+        // navigate('/Saving_table');
+
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+      });
+    // } else {
+    //   setShowAlert(true);
+    // }
   };
 
-  const validateForm = () => {
-    const { userId, type, amount, description, createdAt } = inputState;
+  // const validateForm = () => {
+  //   const { userId, type, amount, description, createdAt } = inputState;
 
-    if (
-      userId.trim() === "" ||
-      type.trim() === "" ||
-      amount.trim() === "" ||
-      description.trim() === "" ||
-      createdAt.trim() === ""
-    ) {
-      return false;
-    }
-    return true;
-  };
+  //   if (
+  //     userId.trim() === "" ||
+  //     type.trim() === "" ||
+  //     amount.trim() === "" ||
+  //     description.trim() === "" ||
+  //     createdAt.trim() === ""
+  //   ) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
   return (
     <div className="form h-screen">

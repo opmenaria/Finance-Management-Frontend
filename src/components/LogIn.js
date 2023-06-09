@@ -21,6 +21,8 @@ const Login = ({ setLoggedIn }) => {
             if (response.status === 200) {
                 console.log('Login successful');
                 response && setLoggedIn(response.data)
+                console.log(response);
+                localStorage.setItem("email", JSON.stringify(response.data.data.email))
                 navigate('/')
                 const token = response.data.token;
                 document.cookie = `accessToken=${token}; path=/;`;

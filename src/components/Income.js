@@ -7,7 +7,7 @@ import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 
 function Income() {
-  const [tableData, setTableData] = useState([]);
+  //const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
     title: "",
     amount: "",
@@ -19,20 +19,28 @@ function Income() {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async(event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:5000/transactions/add-income", { inputState })
-      .then((response) => {
-        setTableData((prev) => [...prev, inputState]);
-
-        console.log("Form Submitted:", inputState);
-
-        //setUsers((prev)=>[...prev,inputState]);
-      })
-      .catch((error) => {
+    try{
+      console.log(inputState);
+      const response = await  axios.post("http://localhost:5000/transactions/add-income",inputState,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        withCredentials: true, // Include credentials in the request
+      }
+    );
+    if(response.status === 200){
+      console.log('Income added successfully');
+      console.log(response.data);
+    }
+    else{
+      console.log('Income aaddition failed');
+    }
+   }
+      catch(error) {
         console.error("Error submitting form:", error);
-      });
+      }
   };
   return (
     <div classname="form">
@@ -126,7 +134,7 @@ function Income() {
         </thead>
 
         <tbody>
-           {tableData.map((user, index) => (
+           {/* {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
               <td>{user.title}</td>
@@ -138,7 +146,7 @@ function Income() {
                 <button className="btn btn-warning">Edit</button>
               </td>
             </tr>
-          ))} 
+          ))}  */}
         </tbody>
       </table>
     </div>

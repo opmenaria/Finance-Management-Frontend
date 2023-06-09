@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios";
 
 
-function Tax(){
+function Tax() {
   const navigate = useNavigate()
- // const [tableData, setTableData] = useState([]);
+  // const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
     userId: "",
     title: "",
     amount: "",
     description: "",
-   
+
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -29,7 +29,7 @@ function Tax(){
         .post("", inputState)
         .then((response) => {
           //setTableData((prev) => [...prev, inputState]);
-         
+
           console.log("Form Submitted:", inputState);
 
           setInputState({
@@ -37,11 +37,11 @@ function Tax(){
             title: "",
             amount: "",
             description: "",
-           
+
           });
           navigate('/Saving_table');
-         // setUsers((prev)=>[...prev,inputState]);
-         
+          // setUsers((prev)=>[...prev,inputState]);
+
         })
         .catch((error) => {
           console.error("Error submitting form:", error);
@@ -52,14 +52,14 @@ function Tax(){
   };
 
   const validateForm = () => {
-    const { userId, title, amount, description} = inputState;
+    const { userId, title, amount, description } = inputState;
 
     if (
       userId.trim() === "" ||
       title.trim() === "" ||
       amount.trim() === "" ||
-      description.trim() === "" 
-     
+      description.trim() === ""
+
     ) {
       return false;
     }
@@ -67,8 +67,8 @@ function Tax(){
   };
 
   return (
-    <div className="form">
-      <h1 style={elementStyle}>Tax</h1>
+    <div className="form h-screen">
+      <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Tax</h1>
       {showAlert && (
         <AlertStyled>
           Please fill in all the fields before submitting!!
@@ -111,7 +111,7 @@ function Tax(){
             onChange={handleOnChange}
           />
         </div>
-    
+
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
@@ -120,10 +120,9 @@ function Tax(){
             rows="3"
             onChange={handleOnChange}
           ></textarea>
-       
+
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
+        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Add Tax
         </button>
 
         {/* <Button
@@ -141,7 +140,7 @@ function Tax(){
             <th scope="col">Title</th>
             <th scope="col">Amount</th>
             <th scope="col">Description</th>
-           
+
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -162,7 +161,7 @@ function Tax(){
           ))} */}
         </tbody>
       </table>
-      
+
     </div>
   );
 }
@@ -222,7 +221,6 @@ const AlertStyled = styled.div`
 
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "powderblue",
   textAlign: "center",
 };
 export default Tax;

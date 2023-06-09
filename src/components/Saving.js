@@ -1,91 +1,56 @@
-import React from "react";
+
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useState } from "react";
-
 import axios from "axios";
-function Saving(){
 
- const [tableData, setTableData] = useState([]);
+function Saving() {
+  const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
-    userId: "",
     type: "",
     amount: "",
     description: "",
-    createdAt:"",
   });
 
-  const [showAlert, setShowAlert] = useState(false);
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    if (validateForm()) {
-      axios
-        .post("", inputState)
-        .then((response) => {
-          setTableData((prev) => [...prev, inputState]);
-         
-          console.log("Form Submitted:", inputState);
-
-          setInputState({
-            user_Id: "",
-            type: "",
-            amount: "",
-            description: "",
-            createdAt:"",
-           
-          });
-          
-         // setUsers((prev)=>[...prev,inputState]);
-         
-        })
-        .catch((error) => {
-          console.error("Error submitting form:", error);
-        });
-    } else {
-      setShowAlert(true);
+    try {
+      console.log(inputState);
+      const response = await axios.post(
+        "http://localhost:5000/savings",
+        inputState,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          withCredentials: true, // Include credentials in the request
+        }
+      );
+      if (response.status === 200) {
+        setTableData((prev) => [...prev, inputState]);
+        console.log("Savings added successfully");
+        console.log(response.data);
+        // navigate('/')
+      } else {
+        console.log("Saving addition failed");
+      }
+    } catch (err) {
+      console.error("Error:", err);
     }
-  };
 
-  const validateForm = () => {
-    const { userId, type, amount, description, createdAt } = inputState;
-
-    if (
-      userId.trim() === "" ||
-      type.trim() === "" ||
-      amount.trim() === "" ||
-      description.trim() === "" ||
-      createdAt.trim() === ""
-    ) {
-      return false;
-    }
-    return true;
+    setInputState({ type: "", amount: "", description: "" });
   };
 
   return (
-    <div className="form">
-      <h1 style={elementStyle}>Savings</h1>
-      {showAlert && (
-        <AlertStyled>
-          Please fill in all the fields before submitting!!
-        </AlertStyled>
-      )}
+    <div className="form h-screen">
+      <h1 className="text-orange-500 font-semibold" style={elementStyle}>
+        Savings
+      </h1>
       <FormStyled onSubmit={handleOnSubmit}>
-        <div className="form-group">
-          <label htmlFor="id">User Id</label>
-          <input
-            type="number"
-            className="form-control"
-            id="id"
-            name="userId"
-            placeholder="User Id"
-            value={inputState.userId}
-            onChange={handleOnChange}
-          />
-        </div>
         <div className="form-group">
           <label htmlFor="type">Type</label>
           <input
@@ -110,62 +75,39 @@ function Saving(){
             onChange={handleOnChange}
           />
         </div>
-    
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
             className="form-control"
-            id="textarea"
+            id="description"
+            name="description"
             rows="3"
+            value={inputState.description}
             onChange={handleOnChange}
           ></textarea>
-           <div className="form-group">
-          <label htmlFor="date">Created At</label>
-          <input
-            type="date"
-            className="form-control"
-            id="date"
-            name="createdAt"
-            placeholder="Date"
-            value={inputState.createdAt}
-            onChange={handleOnChange}
-          />
         </div>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
+        <button
+          type="submit"
+          className="btn btn-primary border font-semibold text-lg mx-auto"
+        >
+          Add Saving
         </button>
-
-        {/* <Button
-      name={'Add Income'}
-      bPad={'.8rem 1.6rem'}
-      brad={'30px'}
-      bg={'var(--color-accent'}
-      color={'#fff'}/> */}
       </FormStyled>
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">User Id</th>
             <th scope="col">Type</th>
             <th scope="col">Amount</th>
             <th scope="col">Description</th>
-            <th scope="col">Created</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
-
         <tbody>
           {tableData.map((user, index) => (
-            <tr key={index.id}>
-              <td>{index + 1}</td>
-              <td>{user.userId}</td>
+            <tr key={index}>
               <td>{user.type}</td>
               <td>{user.amount}</td>
               <td>{user.description}</td>
-              <td>{user.createdAt}</td>
-              
               <td>
                 <button className="btn btn-warning">Edit</button>
               </td>
@@ -173,10 +115,12 @@ function Saving(){
           ))}
         </tbody>
       </table>
-      
     </div>
   );
 }
+
+
+
 const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
@@ -222,18 +166,9 @@ const FormStyled = styled.form`
     }
   }
 `;
-const AlertStyled = styled.div`
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-`;
 
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "powderblue",
   textAlign: "center",
 };
 export default Saving;

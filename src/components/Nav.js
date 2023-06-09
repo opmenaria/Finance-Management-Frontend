@@ -7,7 +7,7 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
         setLoggedIn(null)
     }
     return (
-        <div className=' w-full fixed flex items-center justify-between py-2 bg-gray-900 font-semibold text-lg border-b'>
+        <div className='z-10 w-full fixed flex items-center justify-between py-2 bg-gray-900 font-semibold text-lg border-b'>
 
             <div>
                 <img className=' mx-3 h-12 bg-none rounded-xl border-2 hover:border-blue-500' src={logo} alt="logo" />

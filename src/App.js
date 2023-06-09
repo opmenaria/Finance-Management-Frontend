@@ -26,13 +26,13 @@ function App() {
               <Route path='/' element={<Form />} />
               <Route path='/log' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path='/reg' element={<Register />} />
-              <Route path='/Income' element={<Income />} />
               <Route path='/budget' element={<Budget />} />
               <Route path='/expense' element={<Expense />} />
               <Route path='/saving' element={<Saving />} />
+              <Route path='/income' element={<Income />} />
               <Route path='/Investment' element={<Investment />} />
               <Route path='/Tax' element={<Tax />} />
-            
+
               {/* <Route path='/Form' element={<Income/>} /> */}
 
               {/* <Route path='/productList' element={<ProductList/>}/> */}

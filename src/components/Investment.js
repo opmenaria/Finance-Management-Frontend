@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import styled from "styled-components";
 import axios from "axios";
-import { FaPlus } from "react-icons/fa";
 
 function Investment() {
   const [tableData, setTableData] = useState([]);
@@ -12,33 +11,42 @@ function Investment() {
     name: "",
     amount: "",
     type: "",
-    userId: "",
     startDate: "",
-    enddate:"",
-    description:"",
+    description: "",
   });
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async(event) => {
     event.preventDefault();
-    axios
-      .post("", { inputState })
-      .then((response) => {
-        setTableData((prev) => [...prev, inputState]);
-
-        console.log("Form Submitted:", inputState);
-
-        //setUsers((prev)=>[...prev,inputState]);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
+    try {
+      console.log(inputState);
+      const response = await axios.post('http://localhost:5000/investments', inputState, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        withCredentials: true, // Include credentials in the request
       });
+      if (response.status === 200) {
+        setTableData((prev) => [...prev, inputState]);
+        console.log('Investment added successfully');
+        console.log(response.data);
+        // navigate('/')
+
+      } else {
+        console.log('Investment addition failed');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+    setInputState({ name: "", amount: "", type: "", startdate: "", description: "", })
+
+  
   };
   return (
     <div classname="form">
-      <h1 style={elementStyle}>Investment</h1>
+      <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Investment</h1>
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -77,21 +85,9 @@ function Investment() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="userId">User Id</label>
-          <input
-            type="userId"
-            className="form-control"
-            id="userId"
-            name="userId"
-            placeholder="User Id"
-            value={inputState.userId}
-            onChange={handleOnChange}
-          />
-        </div>
-        <div className="form-group">
           <label htmlFor="startdate">Start Date</label>
           <input
-            type="startdate"
+            type="date"
             className="form-control"
             id="startdate"
             name="startdate"
@@ -100,37 +96,22 @@ function Investment() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="enddate">End Date</label>
-          <input
-            type="enddate"
-            className="form-control"
-            id="enddate"
-            name="enddate"
-            placeholder="End Date"
-            value={inputState.enddate}
-            onChange={handleOnChange}
-          />
-        </div>
+       
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
+            type="textarea"
             className="form-control"
             id="textarea"
             rows="3"
+            name="description"
+            placeholder="Add Description"
             onChange={handleOnChange}
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Add Income <FaPlus />
+        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Add Investment
         </button>
 
-        {/* <Button
-      name={'Add Income'}
-      bPad={'.8rem 1.6rem'}
-      brad={'30px'}
-      bg={'var(--color-accent'}
-      color={'#fff'}/> */}
       </FormStyled>
       <table className="table">
         <thead className="thead-dark">
@@ -139,31 +120,28 @@ function Investment() {
             <th scope="col">Name</th>
             <th scope="col">Amount</th>
             <th scope="col">type</th>
-            <th scope="col">User Id</th>
             <th scope="col">Start Date</th>
-            <th scope="col">End Date</th>
-           
+          
             <th scope="col">Description</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
 
         <tbody>
-           {tableData.map((user, index) => (
+          {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
               <td>{user.name}</td>
               <td>{user.amount}</td>
               <td>{user.type}</td>
-              <td>{user.userId}</td>
               <td>{user.startdate}</td>
-              <td>{user.enddate}</td>
+            
               <td>{user.description}</td>
               <td>
                 <button className="btn btn-warning">Edit</button>
               </td>
             </tr>
-          ))} 
+          ))}
         </tbody>
       </table>
     </div>
@@ -216,7 +194,6 @@ const FormStyled = styled.form`
 `;
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "#002D62",
   textAlign: "center",
 };
 export default Investment;

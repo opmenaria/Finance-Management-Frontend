@@ -19,8 +19,8 @@ const Sidebar = ({ children }) => {
             icon: <MdDashboardCustomize />
         },
         {
-            path: "/Income",
-            name: "Incomes",
+            path: "/income",
+            name: "Incomes ",
             icon: <FaMoneyBillWave />
         },
         {
@@ -52,7 +52,7 @@ const Sidebar = ({ children }) => {
         }
     ]
     return (
-        <div className="  bg-black h-screen">
+        <div className=" fixed  bg-black h-screen">
             <div className="sidebar  text-white flex flex-col pl-2 pt-16">
                 <div className="flex text-center items-center justify-between my-2">
                     <h1 style={{ display: isOpen ? "block" : "none" }} className="text-lg mr-3 text-orange-400 text-left">Finance Management</h1>

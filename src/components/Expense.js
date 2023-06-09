@@ -16,26 +16,37 @@ function Expense() {
     type: "",
     date: "",
     category: "",
-    description: "",
+    description: ""
   });
+
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("", { inputState })
-      .then((response) => {
-        setTableData((prev) => [...prev, inputState]);
-
-        console.log("Form Submitted:", inputState);
-
-        //setUsers((prev)=>[...prev,inputState]);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
+    try {
+      console.log(inputState);
+      const response = await axios.post('http://localhost:5000/transactions/add-expense', inputState, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        withCredentials: true, // Include credentials in the request
       });
+      if (response.status === 200) {
+        setTableData((prev) => [...prev, inputState]);
+        console.log('Expense added successfully');
+        console.log(response.data);
+        // navigate('/')
+
+      } else {
+        console.log('Expense addition failed');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+
+    setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
   };
   return (
 
@@ -122,13 +133,6 @@ function Expense() {
         </div>
         <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
-
-        {/* <Button
-      name={'Add Income'}
-      bPad={'.8rem 1.6rem'}
-      brad={'30px'}
-      bg={'var(--color-accent'}
-      color={'#fff'}/> */}
       </FormStyled>
       <table className="table">
         <thead className="thead-dark">
@@ -150,7 +154,7 @@ function Expense() {
               <td>{index + 1}</td>
               <td>{user.title}</td>
               <td>{user.amount}</td>
-               <td>{user.type}</td>
+              <td>{user.type}</td>
               <td>{user.date}</td>
               <td>{user.category}</td>
               <td>{user.description}</td>
@@ -211,7 +215,6 @@ const FormStyled = styled.form`
 `;
 const element_style = {
   fontSize: "2.5rem",
-  color: "#002D62",
   textAlign: "center",
 };
 export default Expense;

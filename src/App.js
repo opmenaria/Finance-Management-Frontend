@@ -12,6 +12,9 @@ import Saving from './components/Saving';
 import Income from './components/Income';
 import Investment from './components/Investment';
 import Tax from './components/Tax';
+import Contect from './components/Contect';
+import Footer from './components/Footer';
+import About from './components/About';
 function App() {
   const [loggedIn, setLoggedIn] = useState()
 
@@ -32,13 +35,15 @@ function App() {
               <Route path='/income' element={<Income />} />
               <Route path='/Investment' element={<Investment />} />
               <Route path='/Tax' element={<Tax />} />
-
+              <Route path='/Contect' element={<Contect />} />
+              <Route path='/About' element={<About />} />
               {/* <Route path='/Form' element={<Income/>} /> */}
 
               {/* <Route path='/productList' element={<ProductList/>}/> */}
             </Routes>
           </div>
         </div>
+        <Footer/> 
       </div>
     </>
   )

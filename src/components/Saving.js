@@ -22,11 +22,9 @@ function Form() {
   const navigate = useNavigate()
   const [showAlert, setShowAlert] = useState(false);
   const [inputState, setInputState] = useState({
-    userId: "",
     type: "",
     amount: "",
     description: "",
-    createdAt: "",
   });
 
   const handleOnChange = (event) => {
@@ -37,20 +35,18 @@ function Form() {
     event.preventDefault();
 
     if (validateForm()) {
+      console.log(inputState);
       await axios.post("http://localhost:5000/savings", inputState)
         .then((response) => {
-          console.log(inputState);
           console.log("Form Submitted:", response);
 
           setInputState({
-            user_Id: "",
             type: "",
             amount: "",
             description: "",
-            createdAt: "",
 
           });
-          navigate('/Saving_table');
+          // navigate('/Saving_table');
 
         })
         .catch((error) => {
@@ -86,18 +82,6 @@ function Form() {
       )}
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
-          <label htmlFor="id">User Id</label>
-          <input
-            type="number"
-            className="form-control"
-            id="id"
-            name="userId"
-            placeholder="User Id"
-            value={inputState.userId}
-            onChange={handleOnChange}
-          />
-        </div>
-        <div className="form-group">
           <label htmlFor="type">Type</label>
           <input
             type="text"
@@ -126,11 +110,13 @@ function Form() {
           <label htmlFor="textarea">Description</label>
           <textarea
             className="form-control"
-            id="textarea"
+            id="description"
+            name="description"
             rows="3"
+            value={inputState.description}
             onChange={handleOnChange}
           ></textarea>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="date">Created At</label>
             <input
               type="date"
@@ -141,7 +127,7 @@ function Form() {
               value={inputState.createdAt}
               onChange={handleOnChange}
             />
-          </div>
+          </div> */}
         </div>
         <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
@@ -151,8 +137,8 @@ function Form() {
       <table className="table">
         <thead className="thead-light">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">User Id</th>
+            {/* <th scope="col">#</th> */}
+            {/* <th scope="col">User Id</th> */}
             <th scope="col">Type</th>
             <th scope="col">Amount</th>
             <th scope="col">Description</th>

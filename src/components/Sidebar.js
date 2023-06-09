@@ -19,8 +19,8 @@ const Sidebar = ({ children }) => {
             icon: <MdDashboardCustomize />
         },
         {
-            path: "/Form",
-            name: "Incomes ?",
+            path: "/income",
+            name: "Incomes",
             icon: <FaMoneyBillWave />
         },
         {
@@ -35,7 +35,7 @@ const Sidebar = ({ children }) => {
         },
         {
             path: "/Budget",
-            name: "Budget",
+            name: "Budget ?",
             icon: <FaShoppingBag />
         },
         {

@@ -16,8 +16,9 @@ function Expense() {
     type: "",
     date: "",
     category: "",
-    description: "",
+    description: ""
   });
+
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };

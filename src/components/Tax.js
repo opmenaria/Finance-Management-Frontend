@@ -1,20 +1,19 @@
-
-
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom"
 import axios from "axios";
 
 
-function Budget() {
-  const navigate = useNavigate();
-  // const [tableData, setTableData] = useState([]);
+function Tax(){
+  const navigate = useNavigate()
+ // const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
-    name: "",
+    userId: "",
+    title: "",
     amount: "",
-    date1: "",
-    date2: "",
+    description: "",
+   
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -27,20 +26,22 @@ function Budget() {
 
     if (validateForm()) {
       axios
-        .post("http://localhost:5000/transactions/add-expense", inputState)
+        .post("", inputState)
         .then((response) => {
           //setTableData((prev) => [...prev, inputState]);
-
+         
           console.log("Form Submitted:", inputState);
 
           setInputState({
-            name: "",
+            user_Id: "",
+            title: "",
             amount: "",
-            date1: "",
-            date2: "",
+            description: "",
+           
           });
-          navigate("/Budget_table");
-          // setUsers((prev)=>[...prev,inputState]);
+          navigate('/Saving_table');
+         // setUsers((prev)=>[...prev,inputState]);
+         
         })
         .catch((error) => {
           console.error("Error submitting form:", error);
@@ -51,13 +52,14 @@ function Budget() {
   };
 
   const validateForm = () => {
-    const { name, amount, date1, date2 } = inputState;
+    const { userId, title, amount, description} = inputState;
 
     if (
-      name.trim() === "" ||
+      userId.trim() === "" ||
+      title.trim() === "" ||
       amount.trim() === "" ||
-      date1.trim() === "" ||
-      date2.trim() === ""
+      description.trim() === "" 
+     
     ) {
       return false;
     }
@@ -66,7 +68,7 @@ function Budget() {
 
   return (
     <div className="form">
-      <h1 style={elementStyle}>Budget</h1>
+      <h1 style={elementStyle}>Tax</h1>
       {showAlert && (
         <AlertStyled>
           Please fill in all the fields before submitting!!
@@ -74,11 +76,26 @@ function Budget() {
       )}
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
-          <label htmlFor="budget">Budget Name</label>
+          <label htmlFor="id">User Id</label>
+          <input
+            type="number"
+            className="form-control"
+            id="id"
+            name="userId"
+            placeholder="User Id"
+            value={inputState.userId}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
           <input
             type="text"
             className="form-control"
-            id="budget"
+            id="title"
+            name="title"
+            placeholder="Title"
+            value={inputState.type}
             onChange={handleOnChange}
           />
         </div>
@@ -88,40 +105,43 @@ function Budget() {
             type="number"
             className="form-control"
             id="amount"
+            name="amount"
+            placeholder="Amount"
+            value={inputState.amount}
             onChange={handleOnChange}
           />
         </div>
+    
         <div className="form-group">
-          <label htmlFor="date1">Start Date</label>
-          <input
-            type="date"
+          <label htmlFor="textarea">Description</label>
+          <textarea
             className="form-control"
-            id="date1"
+            id="textarea"
+            rows="3"
             onChange={handleOnChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="date2">End Date</label>
-          <input
-            type="date"
-            className="form-control"
-            id="date2"
-            onChange={handleOnChange}
-          />
+          ></textarea>
+       
         </div>
         <button type="submit" className="btn btn-primary">
-          Add Budget
+          Submit
         </button>
+
+        {/* <Button
+      name={'Add Income'}
+      bPad={'.8rem 1.6rem'}
+      brad={'30px'}
+      bg={'var(--color-accent'}
+      color={'#fff'}/> */}
       </FormStyled>
       <table className="table">
         <thead className="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Budget Name</th>
+            <th scope="col">User Id</th>
+            <th scope="col">Title</th>
             <th scope="col">Amount</th>
-            <th scope="col">Start Date</th>
-            <th scope="col">End Date</th>
-            
+            <th scope="col">Description</th>
+           
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -142,10 +162,10 @@ function Budget() {
           ))} */}
         </tbody>
       </table>
+      
     </div>
   );
 }
-
 const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
@@ -202,7 +222,7 @@ const AlertStyled = styled.div`
 
 const elementStyle = {
   fontSize: "2.5rem",
-  color: "#002D62",
+  color: "powderblue",
   textAlign: "center",
 };
-export default Budget;
+export default Tax;

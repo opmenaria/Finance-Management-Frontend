@@ -21,8 +21,8 @@ const Sidebar = ({ children }) => {
             icon: <FaTh />
         },
         {
-            path: "/Form",
-            name: "Incomes",
+            path: "/Income",
+            name: "Income",
             icon: <FaUserAlt />
         },
         {
@@ -31,8 +31,8 @@ const Sidebar = ({ children }) => {
             icon: <FaRegChartBar />
         },
         {
-            path: "/comment",
-            name: "Comment",
+            path: "/Saving",
+            name: "Saving",
             icon: <FaCommentAlt />
         },
         {
@@ -41,8 +41,8 @@ const Sidebar = ({ children }) => {
             icon: <FaShoppingBag />
         },
         {
-            path: "/productList",
-            name: "Product List",
+            path: "/Tax",
+            name: "Tax",
             icon: <FaThList />
         }
     ]

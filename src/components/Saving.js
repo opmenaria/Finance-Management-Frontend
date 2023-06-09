@@ -3,22 +3,9 @@ import styled from "styled-components";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import axios from "axios";
-const AlertStyled = styled.div`
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-`;
 
-const elementStyle = {
-  fontSize: "2.5rem",
-  color: "powderblue",
-  textAlign: "center",
-};
 
-function Form(){
+function Saving(){
   const navigate = useNavigate()
  // const [tableData, setTableData] = useState([]);
   const [inputState, setInputState] = useState({
@@ -158,7 +145,35 @@ function Form(){
       bg={'var(--color-accent'}
       color={'#fff'}/> */}
       </FormStyled>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">User Id</th>
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Description</th>
+            <th scope="col">Created</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
 
+        <tbody>
+          {/* {tableData.map((user, index) => (
+            <tr key={index.id}>
+              <td>{index + 1}</td>
+              <td>{user.title}</td>
+              <td>{user.amount}</td>
+              <td>{user.date}</td>
+              <td>{user.category}</td>
+              <td>{user.description}</td>
+              <td>
+                <button className="btn btn-warning">Edit</button>
+              </td>
+            </tr>
+          ))} */}
+        </tbody>
+      </table>
       
     </div>
   );
@@ -208,4 +223,18 @@ const FormStyled = styled.form`
     }
   }
 `;
-export default Form;
+const AlertStyled = styled.div`
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+`;
+
+const elementStyle = {
+  fontSize: "2.5rem",
+  color: "#002D62",
+  textAlign: "center",
+};
+export default Saving;

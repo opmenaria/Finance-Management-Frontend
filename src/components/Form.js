@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Tabel from './Tabel'
+//import Tabel from './Tabel'
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function Form({ setUserData }) {
@@ -9,7 +9,7 @@ export default function Form({ setUserData }) {
     const [color, setColor] = useState('#ff0000')
 
 
-// randsofasd
+
 
 
     const handleSubmit = (e) => {

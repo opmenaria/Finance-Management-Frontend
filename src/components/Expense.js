@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-const element_style = {
-  fontSize: "2.5rem",
-  color: "powderblue",
-  textAlign: "center",
-};
+
 function Expense() {
   const [inputState, setInputState] = useState({
     title: "",
@@ -73,10 +69,11 @@ function Expense() {
             onChange={handleOnChange}
           >
             <option value="disabled">Select options</option>
-            <option value="salary">Salary</option>
-            <option value="freelancing">Freelancing</option>
-            <option value="investment">Investment</option>
-            <option value="bank">Bank</option>
+            <option value="salary">Education</option>
+            <option value="freelancing">Health</option>
+            <option value="investment">Groceries</option>
+            <option value="bank">Clothing</option>
+            <option value="bank">Travelling</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -101,6 +98,36 @@ function Expense() {
       bg={'var(--color-accent'}
       color={'#fff'}/> */}
       </FormStyled>
+      <table className="table">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Type</th>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {/* {tableData.map((user, index) => (
+            <tr key={index.id}>
+              <td>{index + 1}</td>
+              <td>{user.title}</td>
+              <td>{user.amount}</td>
+              <td>{user.date}</td>
+              <td>{user.category}</td>
+              <td>{user.description}</td>
+              <td>
+                <button className="btn btn-warning">Edit</button>
+              </td>
+            </tr>
+          ))} */}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -149,5 +176,9 @@ const FormStyled = styled.form`
     }
   }
 `;
-
+const element_style = {
+  fontSize: "2.5rem",
+  color: "#002D62",
+  textAlign: "center",
+};
 export default Expense;

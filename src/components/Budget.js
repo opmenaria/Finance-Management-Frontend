@@ -185,7 +185,7 @@ function Budget() {
   const handleOnUpdate = async (id) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/budgets/6481a3717bd5fa3977a4b6bd`,
+        `http://localhost:5000/budgets/${id}`,
         {
           category: inputState.category,
           amount: inputState.amount,
@@ -213,7 +213,7 @@ function Budget() {
   const handleOnDelete = async (id) => {
     try {
       const response = await axios.del(
-        `http://localhost:5000/budgets/6481a3717bd5fa3977a4b6bd`,
+        `http://localhost:5000/budgets/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`

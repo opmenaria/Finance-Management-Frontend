@@ -11,29 +11,38 @@ function Investment() {
     name: "",
     amount: "",
     type: "",
-    userId: "",
     startDate: "",
-    enddate: "",
     description: "",
   });
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async(event) => {
     event.preventDefault();
-    axios
-      .post("", { inputState })
-      .then((response) => {
-        setTableData((prev) => [...prev, inputState]);
-
-        console.log("Form Submitted:", inputState);
-
-        //setUsers((prev)=>[...prev,inputState]);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
+    try {
+      console.log(inputState);
+      const response = await axios.post('http://localhost:5000/investments', inputState, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        withCredentials: true, // Include credentials in the request
       });
+      if (response.status === 200) {
+        setTableData((prev) => [...prev, inputState]);
+        console.log('Investment added successfully');
+        console.log(response.data);
+        // navigate('/')
+
+      } else {
+        console.log('Investment addition failed');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+    setInputState({ name: "", amount: "", type: "", startdate: "", description: "", })
+
+  
   };
   return (
     <div classname="form">
@@ -78,7 +87,7 @@ function Investment() {
         <div className="form-group">
           <label htmlFor="startdate">Start Date</label>
           <input
-            type="startdate"
+            type="date"
             className="form-control"
             id="startdate"
             name="startdate"
@@ -87,18 +96,7 @@ function Investment() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="enddate">End Date</label>
-          <input
-            type="enddate"
-            className="form-control"
-            id="enddate"
-            name="enddate"
-            placeholder="End Date"
-            value={inputState.enddate}
-            onChange={handleOnChange}
-          />
-        </div>
+       
         <div className="form-group">
           <label htmlFor="textarea">Description</label>
           <textarea
@@ -123,7 +121,7 @@ function Investment() {
             <th scope="col">Amount</th>
             <th scope="col">type</th>
             <th scope="col">Start Date</th>
-            <th scope="col">End Date</th>
+          
             <th scope="col">Description</th>
             <th scope="col">Action</th>
           </tr>
@@ -137,7 +135,7 @@ function Investment() {
               <td>{user.amount}</td>
               <td>{user.type}</td>
               <td>{user.startdate}</td>
-              <td>{user.enddate}</td>
+            
               <td>{user.description}</td>
               <td>
                 <button className="btn btn-warning">Edit</button>

@@ -50,11 +50,17 @@ function Expense() {
   };
   return (
 
-    <div className="form">
-      <h1 className=" text-orange-500 font-semibold" style={element_style}>Expenses</h1>
-      <FormStyled onSubmit={handleOnSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">Title</label>
+    <div className="form h-full">
+      {/* {showAlert && (
+        <AlertStyled>
+          Please fill in all the fields before submitting!!
+        </AlertStyled>
+      )} */}
+      <h1 className=" text-orange-500 font-semibold mb-2" style={element_style}>Expenses</h1>
+      <FormStyled className="shadow-lg rounded-lg" onSubmit={handleOnSubmit}
+        style={{ backgroundColor: "#ffffff11" }}
+      >     <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="title">Title</label>
           <input
             value={inputState.title}
             type="text"
@@ -65,8 +71,8 @@ function Expense() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="amount">Amount</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="amount">Amount</label>
           <input
             value={inputState.amount}
             type="number"
@@ -77,8 +83,8 @@ function Expense() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="amount">Type</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="amount">Type</label>
           <input
             value={inputState.type}
             type="text"
@@ -89,8 +95,8 @@ function Expense() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="date">Date</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="date">Date</label>
           <input
             value={inputState.date}
             type="date"
@@ -101,8 +107,8 @@ function Expense() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="category">Category</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="category">Category</label>
           <select
             value={inputState.category}
             className="form-control w-96"
@@ -120,8 +126,8 @@ function Expense() {
           </select>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="textarea">Description</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="textarea">Description</label>
           <textarea
             value={inputState.description}
             className="form-control w-96"
@@ -131,11 +137,11 @@ function Expense() {
             onChange={handleOnChange}
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Submit
+        <button type="submit" className="mb-2 btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
       </FormStyled>
-      <table className="table">
-        <thead className="thead-dark">
+      <table className="table w-5/6 mx-auto  rounded-full shadow-xl">
+        <thead className="thead-dark bg-gray-700 text-white">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
@@ -148,7 +154,7 @@ function Expense() {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="bg-gray-400">
           {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
@@ -159,7 +165,7 @@ function Expense() {
               <td>{user.category}</td>
               <td>{user.description}</td>
               <td>
-                <button className="btn btn-warning">Edit</button>
+                <button className="btn btn-warning w-20 font-semibold">Edit</button>
               </td>
             </tr>
           ))}

@@ -72,45 +72,45 @@
 //         </AlertStyled>
 //       )}
 //       <FormStyled onSubmit={handleOnSubmit}>
-//         <div className="form-group">
+//         <div className="form-group mx-auto">
 //           <label htmlFor="category">Category</label>
 //           <input
 //             value={inputState.category}
 //             type="text"
-//             className="form-control"
+//             className="form-control w-96"
 //             id="category"
 //             name="category"
 //             onChange={handleOnChange}
 //           />
 //         </div>
-//         <div className="form-group">
+//         <div className="form-group mx-auto">
 //           <label htmlFor="amount">Amount</label>
 //           <input
 //             value={inputState.amount}
 //             type="number"
-//             className="form-control"
+//             className="form-control w-96"
 //             id="amount"
 //             name="amount"
 //             onChange={handleOnChange}
 //           />
 //         </div>
-//         <div className="form-group">
+//         <div className="form-group mx-auto">
 //           <label htmlFor="startDate">Start Date</label>
 //           <input
 //             value={inputState.startDate}
 //             type="date"
-//             className="form-control"
+//             className="form-control w-96"
 //             id="startDate"
 //             name='startDate'
 //             onChange={handleOnChange}
 //           />
 //         </div>
-//         <div className="form-group">
+//         <div className="form-group mx-auto">
 //           <label htmlFor="endDate">End Date</label>
 //           <input
 //             value={inputState.endDate}
 //             type="date"
-//             className="form-control"
+//             className="form-control w-96"
 //             id="endDate"
 //             name="endDate"
 //             onChange={handleOnChange}
@@ -272,65 +272,66 @@ function Budget() {
   };
 
   return (
-    <div className="form h-screen">
-      <h1 className="text-orange-500 font-semibold" style={elementStyle}>
-        Budget
-      </h1>
-      {showAlert && (
+    <div className="form h-full">
+      {/* {showAlert && (
         <AlertStyled>
           Please fill in all the fields before submitting!!
         </AlertStyled>
-      )}
-     <FormStyled onSubmit={handleOnSubmit}>
-         <div className="form-group">
-           <label htmlFor="category">Category</label>
+      )} */}
+      <h1 className="text-orange-500 font-semibold mb-2" style={elementStyle}>
+        Budget
+      </h1>
+      <FormStyled className="shadow-lg rounded-lg" onSubmit={handleOnSubmit}
+        style={{ backgroundColor: "#ffffff11" }}
+      >        <div className="form-group mx-auto">
+          <label htmlFor="category">Category</label>
           <input
             value={inputState.category}
             type="text"
-            className="form-control"
+            className="form-control w-96"
             id="category"
             name="category"
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mx-auto">
           <label htmlFor="amount">Amount</label>
           <input
             value={inputState.amount}
             type="number"
-            className="form-control"
+            className="form-control w-96"
             id="amount"
             name="amount"
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mx-auto">
           <label htmlFor="startDate">Start Date</label>
           <input
             value={inputState.startDate}
             type="date"
-            className="form-control"
+            className="form-control w-96"
             id="startDate"
             name='startDate'
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mx-auto">
           <label htmlFor="endDate">End Date</label>
           <input
             value={inputState.endDate}
             type="date"
-            className="form-control"
+            className="form-control w-96"
             id="endDate"
             name="endDate"
             onChange={handleOnChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Add Budget
+        <button type="submit" className="mb-2 btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
       </FormStyled>
-      <table className="table">
-        <thead className="thead-dark">
+      <table className="table w-5/6 mx-auto  rounded-full shadow-xl">
+        <thead className="thead-dark bg-gray-700 text-white">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Category</th>
@@ -342,7 +343,7 @@ function Budget() {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="bg-gray-400">
           {tableData.map((user, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
@@ -352,7 +353,7 @@ function Budget() {
               <td>{user.endDate}</td>
 
               <td>
-                <button className="btn btn-warning">Edit</button>
+                <button className="btn btn-warning w-20 font-semibold">Edit</button>
 
               </td>
             </tr>

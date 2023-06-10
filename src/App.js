@@ -6,36 +6,37 @@ import Register from './components/SignUp'
 import Navbar from './components/Nav';
 import Budget from './components/Budget';
 import Expense from './components/Expense';
-import Form from './components/Saving';
 import Sidebar from './components/Sidebar';
-import Saving from './components/Saving';
 import Income from './components/Income';
 import Investment from './components/Investment';
-import Tax from './components/Tax';
+import Dashbord from './components/Dashbord';
+
 function App() {
   const [loggedIn, setLoggedIn] = useState()
+  const [mail, setMail] = useState()
+
 
   return (
     <>
       <div className="app">
-        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setMail={setMail} mail={mail} />
         <div className='flex'>
-          <Sidebar />
-          <div className='mx-auto mt-20'>
+          <div className='w-1/6'>
+            <Sidebar loggedIn={loggedIn} mail={mail} />
+          </div>
+          <div className='mx-auto mt-20 w-5/6'>
             <Routes>
-              <Route path='/' element={<Form />} />
-              <Route path='/log' element={<Login setLoggedIn={setLoggedIn} />} />
-              <Route path='/reg' element={<Register />} />
-              <Route path='/budget' element={<Budget />} />
-              <Route path='/expense' element={<Expense />} />
-              <Route path='/saving' element={<Saving />} />
-              <Route path='/income' element={<Income />} />
-              <Route path='/Investment' element={<Investment />} />
-              <Route path='/Tax' element={<Tax />} />
-
-              {/* <Route path='/Form' element={<Income/>} /> */}
-
-              {/* <Route path='/productList' element={<ProductList/>}/> */}
+              {loggedIn || mail ?
+                <>
+                  <Route path='/' element={<Dashbord />} />
+                  <Route path='/budget' element={<Budget />} />
+                  <Route path='/expense' element={<Expense />} />
+                  <Route path='/income' element={<Income />} />
+                  <Route path='/Investment' element={<Investment />} /></>
+                : <>
+                  <Route path='/' element={<Login setLoggedIn={setLoggedIn} />} />
+                  <Route path='/reg' element={<Register />} /></>
+              }
             </Routes>
           </div>
         </div>

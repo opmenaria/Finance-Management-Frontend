@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../imgs/financelogo.png'
 
-export default function Navbar({ loggedIn, setLoggedIn }) {
-    const [mail, setMail] = useState()
+export default function Navbar({ loggedIn, setLoggedIn, setMail, mail }) {
+    // const [mail, setMail] = useState()
     const handleLogout = () => {
         document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         setLoggedIn(null)
@@ -18,10 +18,10 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
         mail && console.log(mail);
     }, [mail])
     return (
-        <div className='z-10 w-full fixed flex items-center justify-between py-2 bg-gray-900 font-semibold text-lg border-b'>
+        <div className='z-10 w-full fixed flex items-center justify-between py-1 bg-gray-900 font-semibold text-lg border-b'>
 
             <div>
-                <img className=' mx-3 h-12 bg-none rounded-xl border-2 hover:border-blue-500' src={logo} alt="logo" />
+                <img className=' mx-3 h-10 bg-none rounded-xl border-2 hover:border-blue-500' src={logo} alt="logo" />
             </div>
             <div className='flex  space-x-10'>
 
@@ -36,9 +36,10 @@ export default function Navbar({ loggedIn, setLoggedIn }) {
                 </Link>
             </div>
             {loggedIn || mail ?
-                <div className=' mr-4  flex flex-col space-y-1'>
-                    {mail && <h2 className=' text-white text-sm'>{mail}</h2> || loggedIn && <h2 className=' text-white text-sm'>{loggedIn.data.email}</h2>}
-                    <Link className=' bg-blue-500 hover:bg-blue-600 mr-4 border mx-auto px-2 rounded-md' to='/reg'>
+                <div className=' mr-4  flex items-center space-x-3'>
+                    {mail && <h2 className=' text-white text-sm mr-4'>{mail}</h2>}
+                    {loggedIn && <h2 className=' text-white text-sm mr-4'>{loggedIn.data.email}</h2>}
+                    <Link className=' bg-blue-500 hover:bg-blue-600 mr-4 text-md border mx-auto px-2 rounded-md' to='/reg'>
                         <button onClick={handleLogout} className=' text-white'>Logout</button>
                     </Link></div>
                 : <div className='flex space-x-2 mx-3 text-blue-400'>

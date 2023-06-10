@@ -18,7 +18,7 @@ function Investment() {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
 
-  const handleOnSubmit = async(event) => {
+  const handleOnSubmit = async (event) => {
     event.preventDefault();
     try {
       console.log(inputState);
@@ -42,17 +42,22 @@ function Investment() {
     }
     setInputState({ name: "", amount: "", type: "", startdate: "", description: "", })
 
-  
+
   };
   return (
-    <div classname="form">
-      <h1 className=" text-orange-500 font-semibold" style={elementStyle}>Investment</h1>
-      <FormStyled onSubmit={handleOnSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
+    <div classname="form h-full">
+      {/* {showAlert && (
+        <AlertStyled>
+          Please fill in all the fields before submitting!!
+        </AlertStyled>
+      )} */}
+      <h1 className=" text-orange-500 font-semibold mb-2" style={elementStyle}>Investment</h1>
+      <FormStyled className="shadow-lg rounded-lg " onSubmit={handleOnSubmit} style={{ backgroundColor: "#ffffff11" }}>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="title">Name</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control w-96"
             id="name"
             name="name"
             placeholder="Name"
@@ -60,11 +65,11 @@ function Investment() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="amount">Amount</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="amount">Amount</label>
           <input
             type="number"
-            className="form-control"
+            className="form-control w-96"
             id="amount"
             name="amount"
             placeholder="Amount"
@@ -72,11 +77,11 @@ function Investment() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="type">Type</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="type">Type</label>
           <input
             type="type"
-            className="form-control"
+            className="form-control w-96"
             id="type"
             name="type"
             placeholder="Type"
@@ -84,11 +89,11 @@ function Investment() {
             onChange={handleOnChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="startdate">Start Date</label>
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="startdate">Start Date</label>
           <input
             type="date"
-            className="form-control"
+            className="form-control w-96"
             id="startdate"
             name="startdate"
             placeholder="Start Date"
@@ -96,12 +101,12 @@ function Investment() {
             onChange={handleOnChange}
           />
         </div>
-       
-        <div className="form-group">
-          <label htmlFor="textarea">Description</label>
+
+        <div className="form-group mx-auto">
+          <label className=" text-white" htmlFor="textarea">Description</label>
           <textarea
             type="textarea"
-            className="form-control"
+            className="form-control w-96"
             id="textarea"
             rows="3"
             name="description"
@@ -109,25 +114,25 @@ function Investment() {
             onChange={handleOnChange}
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary border font-semibold text-lg mx-auto"> Add Investment
+        <button type="submit" className="mb-2 btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
 
       </FormStyled>
-      <table className="table">
-        <thead className="thead-dark">
+      <table className="table w-5/6 mx-auto  rounded-full shadow-xl">
+        <thead className="thead-dark bg-gray-700 text-white">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Amount</th>
             <th scope="col">type</th>
             <th scope="col">Start Date</th>
-          
+
             <th scope="col">Description</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="bg-gray-400">
           {tableData.map((user, index) => (
             <tr key={index.id}>
               <td>{index + 1}</td>
@@ -135,10 +140,10 @@ function Investment() {
               <td>{user.amount}</td>
               <td>{user.type}</td>
               <td>{user.startdate}</td>
-            
+
               <td>{user.description}</td>
               <td>
-                <button className="btn btn-warning">Edit</button>
+                <button className="btn btn-warning w-20 font-semibold">Edit</button>
               </td>
             </tr>
           ))}

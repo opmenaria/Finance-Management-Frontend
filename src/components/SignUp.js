@@ -74,8 +74,8 @@ const Register = () => {
                 </form>
             </div>
             <div className='text-white space-y-4 mt-2  flex flex-col'>
-                <p>Already have an account</p>
-                <Link className="w-full bg-blue-500 border py-2 px-4 text-center rounded hover:bg-blue-300" to="/log">Login</Link>
+                <p className=' underline'>Already have an account</p>
+                <Link className="w-full bg-blue-500 border py-2 px-4 text-center rounded hover:bg-blue-300" to="/">Login</Link>
             </div>
         </div>
     );

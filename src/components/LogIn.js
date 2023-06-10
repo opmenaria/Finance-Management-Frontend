@@ -65,8 +65,8 @@ const Login = ({ setLoggedIn }) => {
                     </button>
                 </form>
             </div>
-            <div className='text-white space-y-4 mt-2  flex flex-col'>
-                <p>New to our App</p>
+            <div className='text-white space-y-4 mt-2  flex flex-col '>
+                <p className='text-white underline'>New to our App</p>
                 <Link className="w-full bg-blue-500 border py-2 px-4 text-center rounded hover:bg-blue-300" to="/reg">Register</Link>
             </div>
         </div>

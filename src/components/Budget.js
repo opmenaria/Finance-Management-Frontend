@@ -1,149 +1,3 @@
-// import React from "react";
-// import styled from "styled-components";
-// import {useEffect,useState } from "react";
-// import axios from "axios";
-
-// function Budget() {
-//   const [tableData, setTableData] = useState([]);
-//   const [inputState, setInputState] = useState({
-//     category: "",
-//     amount: "",
-//     startDate: "",
-//     endDate: ""
-//   });
-
-//   const [showAlert, setShowAlert] = useState(false);
-//   useEffect(()=>{
-//     fetchData();
-//   },[]);
-//   const fetchData = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:5000/budgets/', {
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-//         },
-//         withCredentials: true,
-//       });
-//       if (response.status === 200) {
-//         setTableData(response.data);
-//         console.log('Data retrieved successfully');
-//       } else {
-//         console.log('Failed to retrieve data');
-//       }
-//     } catch (err) {
-//       console.error('Error:', err);
-//     }
-//   };
-
-//   // const handleOnUpdate =async(id) => {
-//   //   try {
-//   //     const response = await axios.put('http://localhost:5000/budgets/6481a3717bd5fa3977a4b6bd', {
-//   //       headers: {
-//   //         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-//   //       },
-//   //       withCredentials: true,
-//   //     });
-//   //     if (response.status === 200) {
-//   //       setTableData(response.data);
-//   //       console.log('Data update successfully');
-//   //     } else {
-//   //       console.log('Failed to update data');
-//   //     }
-//   //   } catch (err) {
-//   //     console.error('Error:', err);
-//   //   }
-//   // };
-
-//   const handleOnUpdate = async (id) => {
-//     try {
-//       const response = await axios.put(
-//         `http://localhost:5000/budgets/6481a3717bd5fa3977a4b6bd`,
-//         {
-//           category: inputState.category,
-//           amount: inputState.amount,
-//           startDate: inputState.startDate,
-//           endDate: inputState.endDate
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-//           },
-//           withCredentials: true
-//         }
-//       );
-//       if (response.status === 200) {
-//         console.log("Data updated successfully");
-//         fetchData(); // Refresh the data after update
-//       } else {
-//         console.log("Failed to update data");
-//       }
-//     } catch (err) {
-//       console.error("Error:", err);
-//     }
-//   };
-
-//   const handleOnDelete = async (id) => {
-//     try {
-//       const response = await axios.delete(
-//         `http://localhost:5000/budgets/6481a3717bd5fa3977a4b6bd`,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-//           },
-//           withCredentials: true
-//         }
-//       );
-//       if (response.status === 200) {
-//         console.log("Data deleted successfully");
-//         fetchData(); // Refresh the data after deletion
-//       } else {
-//         console.log("Failed to delete data");
-//       }
-//     } catch (err) {
-//       console.error("Error:", err);
-//     }
-//   };
-//   const handleOnChange = (event) => {
-//     setInputState({ ...inputState, [event.target.name]: event.target.value });
-//   };
-
-//   const handleOnSubmit = (event) => {
-//     event.preventDefault();
-
-//     if (validateForm()) {
-//       axios
-//         .post("http://localhost:5000/budgets", inputState, {
-//           headers: {
-//             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-//           },
-//           withCredentials: true // Include credentials in the request
-//         })
-//         .then((response) => {
-//           setTableData((prev) => [...prev, response.data]);
-//           console.log("Form Submitted:", response.data);
-//           setInputState({ category: "", amount: "", startDate: "", endDate: "" });
-//         })
-//         .catch((error) => {
-//           console.error("Error submitting form:", error);
-//         });
-//     } else {
-//       setShowAlert(true);
-//     }
-//   };
-
-//   const validateForm = () => {
-//     const { category, amount, startDate, endDate } = inputState;
-
-//     if (
-//       category.trim() === "" ||
-//       amount.trim() === "" ||
-//       startDate.trim() === "" ||
-//       endDate.trim() === ""
-//     ) {
-//       setShowAlert(true)
-//       return false;
-//     }
-
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -183,9 +37,9 @@ function Budget() {
   };
 
   const handleOnUpdate = async (id) => {
+    console.log(id);
     try {
-      const response = await axios.put(
-        `http://localhost:5000/budgets/6481a3717bd5fa3977a4b6bd`,
+      const response = await axios.put(`http://localhost:5000/budgets/${id}`,
         {
           category: inputState.category,
           amount: inputState.amount,
@@ -212,8 +66,8 @@ function Budget() {
 
   const handleOnDelete = async (id) => {
     try {
-      const response = await axios.del(
-        `http://localhost:5000/budgets/6481a3717bd5fa3977a4b6bd`,
+      const response = await axios.delete(
+        `http://localhost:5000/budgets/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -248,7 +102,7 @@ function Budget() {
           withCredentials: true // Include credentials in the request
         })
         .then((response) => {
-          setTableData((prev) => [...prev, response.data]);
+          setTableData((prev) => [inputState, ...prev]);
           console.log("Form Submitted:", response.data);
           setInputState({ category: "", amount: "", startDate: "", endDate: "" });
         })
@@ -303,7 +157,7 @@ function Budget() {
       <FormStyled className="shadow-lg rounded-lg" onSubmit={handleOnSubmit}
         style={{ backgroundColor: "#ffffff11" }}
       >        <div className="form-group mx-auto">
-          <label htmlFor="category">Category</label>
+          <label className=" text-white" htmlFor="category">Category</label>
           <input
             value={inputState.category}
             type="text"
@@ -314,7 +168,7 @@ function Budget() {
           />
         </div>
         <div className="form-group mx-auto">
-          <label htmlFor="amount">Amount</label>
+          <label className=" text-white" htmlFor="amount">Amount</label>
           <input
             value={inputState.amount}
             type="number"
@@ -325,7 +179,7 @@ function Budget() {
           />
         </div>
         <div className="form-group mx-auto">
-          <label htmlFor="startDate">Start Date</label>
+          <label className=" text-white" htmlFor="startDate">Start Date</label>
           <input
             value={inputState.startDate}
             type="date"
@@ -336,7 +190,7 @@ function Budget() {
           />
         </div>
         <div className="form-group mx-auto">
-          <label htmlFor="endDate">End Date</label>
+          <label className=" text-white" htmlFor="endDate">End Date</label>
           <input
             value={inputState.endDate}
             type="date"
@@ -368,12 +222,11 @@ function Budget() {
               <td>{index + 1}</td>
               <td>{user.category}</td>
               <td>{user.amount}</td>
-              <td>{user.startDate}</td>
-              <td>{user.endDate}</td>
-
+              <td>{new Date(user.startDate).toLocaleString()}</td>
+              <td>{new Date(user.endDate).toLocaleString()}</td>
               <td className="flex justify-between">
-                <button className="btn btn-warning w-20 font-semibold" onClick={handleOnUpdate}>Edit</button>
-                <button className="btn btn-danger w-20 font-semibold" onClick={handleOnDelete}>Delete</button>
+                <button className="btn btn-warning w-20 font-semibold" onClick={() => handleOnUpdate(user._id)}>Edit</button>
+                <button className="btn btn-danger w-20 font-semibold" onClick={() => handleOnDelete(user._id)}>Delete</button>
               </td>
             </tr>
           ))}

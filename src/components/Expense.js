@@ -41,6 +41,60 @@ function Expense() {
       console.error('Error:', err);
     }
   };
+
+  const handleOnUpdate = async (id) => {
+    console.log(id);
+    try {
+      const response = await axios.put(`http://localhost:5000/transactions/update-expense/${id}`,
+        {
+          category: inputState.category,
+          amount: inputState.amount,
+          type: inputState.type,
+          date: inputState.date,
+          title: inputState.title,
+          description: inputState.description
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          },
+          withCredentials: true
+        }
+      );
+      if (response.status === 200) {
+        console.log("Data updated successfully");
+        setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
+        fetchData();
+      } else {
+        console.log("Failed to update data");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  const handleOnDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/transactions/delete-expense/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          },
+          withCredentials: true
+        }
+      );
+      if (response.status === 200) {
+        console.log("Data deleted successfully");
+        fetchData(); // Refresh the data after deletion
+      } else {
+        console.log("Failed to delete data");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
@@ -58,11 +112,10 @@ function Expense() {
           withCredentials: true, // Include credentials in the request
         });
         if (response.status === 200) {
-          setTableData((prev) => [...prev, inputState]);
+          setTableData((prev) => [inputState, ...prev]);
           console.log('Expense added successfully');
-          console.log(response.data);
+          fetchData()
           // navigate('/')
-
         } else {
           console.log('Expense addition failed');
         }
@@ -212,16 +265,17 @@ function Expense() {
 
         <tbody className="bg-gray-400">
           {tableData.map((user, index) => (
-            <tr key={index.id}>
+            <tr key={index}>
               <td>{index + 1}</td>
               <td>{user.title}</td>
               <td>{user.amount}</td>
               <td>{user.type}</td>
-              <td>{user.date}</td>
+              <td>{new Date(user.date).toLocaleString()}</td>
               <td>{user.category}</td>
               <td>{user.description}</td>
-              <td>
-                <button className="btn btn-warning w-20 font-semibold">Edit</button>
+              <td className="flex justify-between">
+                <button className="btn btn-warning w-20 font-semibold" onClick={() => handleOnUpdate(user._id)}>Edit</button>
+                <button className="btn btn-danger w-20 font-semibold" onClick={() => handleOnDelete(user._id)}>Delete</button>
               </td>
             </tr>
           ))}

@@ -14,9 +14,6 @@ export default function Navbar({ loggedIn, setLoggedIn, setMail, mail }) {
         const email = localStorage.getItem("email")
         setMail(email)
     }, [])
-    useEffect(() => {
-        mail && console.log(mail);
-    }, [mail])
     return (
         <div className='z-10 w-full fixed flex items-center justify-between py-1 bg-gray-900 font-semibold text-lg border-b'>
 

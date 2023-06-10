@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 
 import axios from 'axios'
 // import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import axios from 'axios'
 
 function Expense() {
   // const navigate = useNavigate()
+  const[showAlert,setShowAlert]=useState(false)
   const [tableData, setTableData] = useState([])
   const [inputState, setInputState] = useState({
     title: "",
@@ -18,13 +19,36 @@ function Expense() {
     category: "",
     description: ""
   });
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/transactions/get-expenses/', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setTableData(response.data);
+        console.log('Data retrieved successfully');
+      } else {
+        console.log('Failed to retrieve data');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
   const handleOnChange = (event) => {
     setInputState({ ...inputState, [event.target.name]: event.target.value });
   };
-
+  
+ 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    if (validateform()){
     try {
       console.log(inputState);
       const response = await axios.post('http://localhost:5000/transactions/add-expense', inputState, {
@@ -45,12 +69,52 @@ function Expense() {
     } catch (err) {
       console.error('Error:', err);
     }
-
     setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
+    
+  }
+  else{
+    setShowAlert(true);
+  }
+};
+   const validateform = () =>{
+    const{title,amount,type,date,category,description} = inputState;
+
+    if (
+      title.trim() ===""||
+      amount.trim() ==="" ||
+      type.trim() === "" ||
+      date.trim() === ""||
+      category.trim() ===""||
+      description.trim() === ""
+    )
+    {
+    setShowAlert(true);
+    return false;
+   }
+     return true;
   };
+  
+  useEffect(()=>{
+    let timeoutld;
+    if(showAlert){
+      timeoutld=setTimeout(()=>{
+        setShowAlert(false)
+      },3000)
+    }
+    return()=>{
+      clearTimeout (timeoutld);
+    };
+
+  },[showAlert]);
   return (
 
     <div className="form">
+      {showAlert&&(
+        <AlertStyled>
+            Please fill in all the fields before submitting!!
+        </AlertStyled>
+      )
+      }
       <h1 className=" text-orange-500 font-semibold" style={element_style}>Expenses</h1>
       <FormStyled onSubmit={handleOnSubmit}>
         <div className="form-group">
@@ -212,6 +276,14 @@ const FormStyled = styled.form`
       border-color: #0062cc;
     }
   }
+`;
+const AlertStyled = styled.div`
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
 `;
 const element_style = {
   fontSize: "2.5rem",

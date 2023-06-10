@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../imgs/financelogo.png'
 
@@ -15,11 +15,12 @@ export default function Navbar({ loggedIn, setLoggedIn, setMail, mail }) {
         setMail(email)
     }, [])
     return (
-        <div className='z-10 w-full fixed flex items-center justify-between py-1 bg-gray-900 font-semibold text-lg border-b'>
+        <div className='bgt z-10 w-full fixed flex items-center justify-between py-2 bg-gray-90 font-semibold text-lg border-b'
+            style={{}}>
 
-            <div>
-                <img className=' mx-3 h-10 bg-none rounded-xl border-2 hover:border-blue-500' src={logo} alt="logo" />
-            </div>
+            <Link to='/'>
+                <img className=' mx-3 h-10 bg-none rounded-full border-2 hover:border-blue-500' src={logo} alt="logo" />
+            </Link>
             <div className='flex  space-x-10'>
 
                 <Link to='/'>

@@ -172,7 +172,7 @@ function Income() {
           Please fill in all the fields before submitting!!
         </AlertStyled>
       )}
-      <h1 className="mb-2 text-orange-500 font-semibold" style={element_style}>
+      <h1 className="mb-2 text-orange-400 shadow-lg  font-semibold" style={element_style}>
         Add Incomes
       </h1>
       <FormStyled className="shadow-lg rounded-lg" onSubmit={handleOnSubmit}
@@ -258,7 +258,7 @@ function Income() {
         <button type="submit" className="mb-2 btn btn-primary border font-semibold text-lg mx-auto"> Submit
         </button>
       </FormStyled>
-      <table className="table w-5/6 mx-auto  rounded-full shadow-xl">
+      <table className="table w-5/6 mx-auto  overflow-hidden  rounded-md shadow-xl">
         <thead className="thead-dark bg-gray-700 text-white">
           <tr>
             <th scope="col">#</th>

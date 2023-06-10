@@ -175,7 +175,7 @@ function Investment() {
           Please fill in all the fields before submitting!!
         </AlertStyled>
       )}
-      <h1 className=" text-orange-500 font-semibold mb-2" style={element_style}>Investment</h1>
+      <h1 className=" text-orange-400 shadow-lg  font-semibold mb-2" style={element_style}>Investment</h1>
       <FormStyled className="shadow-lg rounded-lg " onSubmit={handleOnSubmit} style={{ backgroundColor: "#ffffff11" }}>
         <div className="form-group mx-auto">
           <label className=" text-white" htmlFor="title">Name</label>
@@ -241,7 +241,7 @@ function Investment() {
         <button type="submit" className="mb-2 btn btn-primary border font-semibold text-lg mx-auto"> Submit</button>
 
       </FormStyled>
-      <table className="table w-5/6 mx-auto  rounded-full shadow-xl">
+      <table className="table w-5/6 mx-auto overflow-hidden  rounded-md shadow-xl">
         <thead className="thead-dark bg-gray-700 text-white">
           <tr>
             <th scope="col">#</th>

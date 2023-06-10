@@ -80,8 +80,11 @@ function Income() {
       });
     } else {
       setShowAlert(true);
+
     }
+
   };
+
 
   const validateForm = () => {
     const { title, amount, type, category, description } = inputState;
@@ -92,10 +95,23 @@ function Income() {
       category.trim() === "" ||
       description.trim() === ""
     ) {
+      setShowAlert(true);
       return false;
     }
     return true;
   };
+
+  useEffect(() => {
+    let timeoutld;
+    if (showAlert) {
+      timeoutld = setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeoutld);
+    };
+  }, [showAlert]);
 
   return (
     <div className="form h-full">

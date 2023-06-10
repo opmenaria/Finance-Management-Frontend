@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from 'axios'
 // import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import axios from 'axios'
 
 function Expense() {
   // const navigate = useNavigate()
+  const [showAlert, setShowAlert] = useState(false)
   const [tableData, setTableData] = useState([])
   const [inputState, setInputState] = useState({
     title: "",
@@ -18,44 +19,99 @@ function Expense() {
     category: "",
     description: ""
   });
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const handleOnChange = (event) => {
-    setInputState({ ...inputState, [event.target.name]: event.target.value });
-  };
-
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const fetchData = async () => {
     try {
-      console.log(inputState);
-      const response = await axios.post('http://localhost:5000/transactions/add-expense', inputState, {
+      const response = await axios.get('http://localhost:5000/transactions/get-expenses/', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
-        withCredentials: true, // Include credentials in the request
+        withCredentials: true,
       });
       if (response.status === 200) {
-        setTableData((prev) => [...prev, inputState]);
-        console.log('Expense added successfully');
-        console.log(response.data);
-        // navigate('/')
-
+        setTableData(response.data);
+        console.log('Data retrieved successfully');
       } else {
-        console.log('Expense addition failed');
+        console.log('Failed to retrieve data');
       }
     } catch (err) {
       console.error('Error:', err);
     }
-
-    setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
   };
+  const handleOnChange = (event) => {
+    setInputState({ ...inputState, [event.target.name]: event.target.value });
+  };
+
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    if (validateform()) {
+      try {
+        console.log(inputState);
+        const response = await axios.post('http://localhost:5000/transactions/add-expense', inputState, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+          withCredentials: true, // Include credentials in the request
+        });
+        if (response.status === 200) {
+          setTableData((prev) => [...prev, inputState]);
+          console.log('Expense added successfully');
+          console.log(response.data);
+          // navigate('/')
+
+        } else {
+          console.log('Expense addition failed');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+      setInputState({ title: "", amount: "", type: "", date: "", category: "", description: "", })
+
+    }
+    else {
+      setShowAlert(true);
+    }
+  };
+  const validateform = () => {
+    const { title, amount, type, date, category, description } = inputState;
+
+    if (
+      title.trim() === "" ||
+      amount.trim() === "" ||
+      type.trim() === "" ||
+      date.trim() === "" ||
+      category.trim() === "" ||
+      description.trim() === ""
+    ) {
+      setShowAlert(true);
+      return false;
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    let timeoutld;
+    if (showAlert) {
+      timeoutld = setTimeout(() => {
+        setShowAlert(false)
+      }, 3000)
+    }
+    return () => {
+      clearTimeout(timeoutld);
+    };
+
+  }, [showAlert]);
   return (
 
     <div className="form h-full">
-      {/* {showAlert && (
+      {showAlert && (
         <AlertStyled>
           Please fill in all the fields before submitting!!
-        </AlertStyled>
-      )} */}
+        </AlertStyled>)}
       <h1 className=" text-orange-500 font-semibold mb-2" style={element_style}>Expenses</h1>
       <FormStyled className="shadow-lg rounded-lg" onSubmit={handleOnSubmit}
         style={{ backgroundColor: "#ffffff11" }}
@@ -218,6 +274,14 @@ const FormStyled = styled.form`
       border-color: #0062cc;
     }
   }
+`;
+const AlertStyled = styled.div`
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
 `;
 const element_style = {
   fontSize: "2.5rem",

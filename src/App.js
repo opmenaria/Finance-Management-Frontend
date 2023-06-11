@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
+import axios from 'axios'
 import Login from './components/LogIn'
 import Register from './components/SignUp'
 import Navbar from './components/Nav';
@@ -15,8 +16,28 @@ import Footer from './components/Footer';
 import About from './components/About';
 function App() {
   const [loggedIn, setLoggedIn] = useState()
+  const [tableData, setTableData] = useState([])
   const [mail, setMail] = useState()
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/investments', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setTableData(response.data);
+        console.log(response.data);
+        console.log('Data retrieved successfully');
+      } else {
+        console.log('Failed to retrieve data');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
 
   return (
     <>
@@ -28,13 +49,17 @@ function App() {
           </div>
           <div className='mx-auto mt-20 w-5/6'>
             <Routes>
-              <Route path='/' element={<Dashbord />} />
+              {(loggedIn || mail) ?
+                <Route path='/' element={<Dashbord graphData={tableData} fetchData={fetchData} />} />
+                : <Route path='/' element={<Login setLoggedIn={setLoggedIn} />} />
+
+              }
               <Route path='/budget' element={<Budget />} />
               <Route path='/expense' element={<Expense />} />
               <Route path='/income' element={<Income />} />
               <Route path='/About' element={<About />} />
               <Route path='/Contect' element={<Contect />} />
-              <Route path='/Investment' element={<Investment />} />
+              <Route path='/Investment' element={<Investment fetchData={fetchData} tableData={tableData} setTableData={setTableData} />} />
               <Route path='/log' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path='/reg' element={<Register />} />
             </Routes>

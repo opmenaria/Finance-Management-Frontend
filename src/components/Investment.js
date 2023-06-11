@@ -1,14 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-
 import axios from 'axios'
-// import { useNavigate } from 'react-router-dom';
 
-function Investment() {
-  // const navigate = useNavigate()
+function Investment({ tableData, fetchData, setTableData }) {
   const [showAlert, setShowAlert] = useState(false)
-  const [tableData, setTableData] = useState([])
   const [inputState, setInputState] = useState({
     name: "",
     amount: "",
@@ -20,25 +16,6 @@ function Investment() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/investments', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-        withCredentials: true,
-      });
-      if (response.status === 200) {
-        setTableData(response.data);
-        console.log('Data retrieved successfully');
-      } else {
-        console.log('Failed to retrieve data');
-      }
-    } catch (err) {
-      console.error('Error:', err);
-    }
-  };
 
   const handleOnUpdate = async (id) => {
     console.log(id);

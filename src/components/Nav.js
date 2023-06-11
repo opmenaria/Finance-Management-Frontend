@@ -30,7 +30,7 @@ export default function Navbar({ loggedIn, setLoggedIn, setMail, mail }) {
                     <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>About</div>
                 </Link>
                 <Link to='/Contect'>
-                    <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>Contect Us</div>
+                    <div className=' text-yellow-200 hover:text-white border-x  px-2 rounded-md'>Contact Us</div>
                 </Link>
             </div>
             {loggedIn || mail ?
